@@ -1,4 +1,1099 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
+          // 初始化所有功能
+          initializeNavigation();
+          initializeAnimations();
+          initializeSliders();
+          initializeModals();
+          initializeSearch();
+          initializeScrollEffects();
+          initializeCarousel();
+          initializeVenuesSlider();
+
+          const loggedInEmail = localStorage.getItem("loggedInEmail");
+          if (loggedInEmail) {
+            updateUIAfterLogin(loggedInEmail);
+          }
+
+          if (localStorage.getItem("showLoginModal") === "true") {
+            document.getElementById("loginModal").classList.add("show");
+            localStorage.removeItem("showLoginModal");
+          }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+          // 初始化所有功能
+          initializeNavigation();
+          initializeAnimations();
+          initializeSliders();
+          initializeModals();
+          initializeSearch();
+          initializeScrollEffects();
+          initializeCarousel();
+          initializeVenuesSlider();
+
+          const loggedInEmail = localStorage.getItem("loggedInEmail");
+          if (loggedInEmail) {
+            updateUIAfterLogin(loggedInEmail);
+          }
+
+          if (localStorage.getItem("showLoginModal") === "true") {
+            document.getElementById("loginModal").classList.add("show");
+            localStorage.removeItem("showLoginModal");
+          }
+        });
+
+        function initializeNavigation() {
+          const header = document.querySelector(".main-header");
+          let lastScroll = 0;
+
+          window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+              header.classList.remove("scroll-up");
+              return;
+            }
+
+            if (currentScroll > lastScroll && !header.classList.contains("scroll-down")) {
+              header.classList.remove("scroll-up");
+              header.classList.add("scroll-down");
+            } else if (currentScroll < lastScroll && header.classList.contains("scroll-down")) {
+              header.classList.remove("scroll-down");
+              header.classList.add("scroll-up");
+            }
+            lastScroll = currentScroll;
+          });
+        }
+
+        function initializeAnimations() {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("fade-in");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.1,
+              rootMargin: "0px",
+            }
+          );
+
+          const animatedElements = document.querySelectorAll(
+            ".feature-card, .event-card, .venue-card, .section-title"
+          );
+          animatedElements.forEach((el) => observer.observe(el));
+        }
+
+        function initializeSliders() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+
+          const venuesSlider = document.querySelector(".venues-slider");
+          if (venuesSlider) {
+            setupVenuesSlider(venuesSlider);
+          }
+        }
+
+        function setupCarousel(carousel) {
+          const track = carousel.querySelector(".carousel-track");
+          const slides = Array.from(track.children);
+          const nextButton = carousel.querySelector(".next");
+          const prevButton = carousel.querySelector(".prev");
+          const dotsContainer = carousel.querySelector(".carousel-dots");
+
+          slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.classList.add("carousel-dot");
+            if (index === 0) dot.classList.add("active");
+            dotsContainer.appendChild(dot);
+          });
+
+          const dots = Array.from(dotsContainer.children);
+          let currentSlide = 0;
+
+          const updateCarousel = (index) => {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === index);
+            });
+            currentSlide = index;
+          };
+
+          let autoplayInterval = setInterval(() => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+          }, 5000);
+
+          const resetAutoplay = () => {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(() => {
+              const nextIndex = (currentSlide + 1) % slides.length;
+              updateCarousel(nextIndex);
+            }, 5000);
+          };
+
+          nextButton.addEventListener("click", () => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+            resetAutoplay();
+          });
+
+          prevButton.addEventListener("click", () => {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel(prevIndex);
+            resetAutoplay();
+          });
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => {
+              updateCarousel(index);
+              resetAutoplay();
+            });
+          });
+
+          let touchStartX = 0;
+          let touchEndX = 0;
+
+          carousel.addEventListener("touchstart", (e) => {
+            touchStartX = e.touches[0].clientX;
+          });
+
+          carousel.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            const difference = touchStartX - touchEndX;
+
+            if (Math.abs(difference) > 50) {
+              if (difference > 0) {
+                const nextIndex = (currentSlide + 1) % slides.length;
+                updateCarousel(nextIndex);
+              } else {
+                const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel(prevIndex);
+              }
+              resetAutoplay();
+            }
+          });
+        }
+
+        function setupVenuesSlider(slider) {
+          let isDown = false;
+          let startX;
+          let scrollLeft;
+
+          slider.addEventListener("mousedown", (e) => {
+            isDown = true;
+            slider.classList.add("active");
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+          });
+
+          slider.addEventListener("mouseleave", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mouseup", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+          });
+        }
+
+        function initializeModals() {
+          const loginBtn = document.querySelector(".btn-login");
+          const modal = document.getElementById("loginModal");
+
+          if (loginBtn && modal) {
+            loginBtn.addEventListener("click", () => {
+              modal.style.display = "flex";
+              document.body.style.overflow = "hidden";
+            });
+
+            modal.addEventListener("click", (e) => {
+              if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+
+            document.addEventListener("keydown", (e) => {
+              if (e.key === "Escape" && modal.style.display === "flex") {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+          }
+        }
+
+       
+        function initializeNavigation() {
+          const header = document.querySelector(".main-header");
+          let lastScroll = 0;
+
+          window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+              header.classList.remove("scroll-up");
+              return;
+            }
+
+            if (currentScroll > lastScroll && !header.classList.contains("scroll-down")) {
+              header.classList.remove("scroll-up");
+              header.classList.add("scroll-down");
+            } else if (currentScroll < lastScroll && header.classList.contains("scroll-down")) {
+              header.classList.remove("scroll-down");
+              header.classList.add("scroll-up");
+            }
+            lastScroll = currentScroll;
+          });
+        }
+
+        function initializeAnimations() {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("fade-in");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.1,
+              rootMargin: "0px",
+            }
+          );
+
+          const animatedElements = document.querySelectorAll(
+            ".feature-card, .event-card, .venue-card, .section-title"
+          );
+          animatedElements.forEach((el) => observer.observe(el));
+        }
+
+        function initializeSliders() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+
+          const venuesSlider = document.querySelector(".venues-slider");
+          if (venuesSlider) {
+            setupVenuesSlider(venuesSlider);
+          }
+        }
+
+        function setupCarousel(carousel) {
+          const track = carousel.querySelector(".carousel-track");
+          const slides = Array.from(track.children);
+          const nextButton = carousel.querySelector(".next");
+          const prevButton = carousel.querySelector(".prev");
+          const dotsContainer = carousel.querySelector(".carousel-dots");
+
+          slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.classList.add("carousel-dot");
+            if (index === 0) dot.classList.add("active");
+            dotsContainer.appendChild(dot);
+          });
+
+          const dots = Array.from(dotsContainer.children);
+          let currentSlide = 0;
+
+          const updateCarousel = (index) => {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === index);
+            });
+            currentSlide = index;
+          };
+
+          let autoplayInterval = setInterval(() => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+          }, 5000);
+
+          const resetAutoplay = () => {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(() => {
+              const nextIndex = (currentSlide + 1) % slides.length;
+              updateCarousel(nextIndex);
+            }, 5000);
+          };
+
+          nextButton.addEventListener("click", () => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+            resetAutoplay();
+          });
+
+          prevButton.addEventListener("click", () => {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel(prevIndex);
+            resetAutoplay();
+          });
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => {
+              updateCarousel(index);
+              resetAutoplay();
+            });
+          });
+
+          let touchStartX = 0;
+          let touchEndX = 0;
+
+          carousel.addEventListener("touchstart", (e) => {
+            touchStartX = e.touches[0].clientX;
+          });
+
+          carousel.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            const difference = touchStartX - touchEndX;
+
+            if (Math.abs(difference) > 50) {
+              if (difference > 0) {
+                const nextIndex = (currentSlide + 1) % slides.length;
+                updateCarousel(nextIndex);
+              } else {
+                const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel(prevIndex);
+              }
+              resetAutoplay();
+            }
+          });
+        }
+
+        function setupVenuesSlider(slider) {
+          let isDown = false;
+          let startX;
+          let scrollLeft;
+
+          slider.addEventListener("mousedown", (e) => {
+            isDown = true;
+            slider.classList.add("active");
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+          });
+
+          slider.addEventListener("mouseleave", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mouseup", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+          });
+        }
+
+        function initializeModals() {
+          const loginBtn = document.querySelector(".btn-login");
+          const modal = document.getElementById("loginModal");
+
+          if (loginBtn && modal) {
+            loginBtn.addEventListener("click", () => {
+              modal.style.display = "flex";
+              document.body.style.overflow = "hidden";
+            });
+
+            modal.addEventListener("click", (e) => {
+              if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+
+            document.addEventListener("keydown", (e) => {
+              if (e.key === "Escape" && modal.style.display === "flex") {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+          }
+        }
+
+        function initializeSearch() {
+          const searchInput = document.querySelector(".search-bar input");
+          let searchTimeout;
+
+          if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+              clearTimeout(searchTimeout);
+              searchTimeout = setTimeout(() => {
+                console.log("搜尋:", e.target.value);
+              }, 500);
+            });
+          }
+        }
+
+        function initializeScrollEffects() {
+          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+              e.preventDefault();
+              const target = document.querySelector(this.getAttribute("href"));
+              if (target) {
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            });
+          });
+
+          const backToTop = document.createElement("button");
+          backToTop.innerHTML = "↑";
+          backToTop.className = "back-to-top";
+          backToTop.style.display = "none";
+          document.body.appendChild(backToTop);
+
+          window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+              backToTop.style.display = "block";
+            } else {
+              backToTop.style.display = "none";
+            }
+          });
+
+          backToTop.addEventListener("click", () => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+
+        function initializeCarousel() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+        }
+
+        function initializeVenuesSlider() {
+          const slider = document.querySelector(".venues-slider");
+          if (slider) {
+            setupVenuesSlider(slider);
+          }
+        }
+
+        function validateForm(form) {
+          const inputs = form.querySelectorAll("input[required]");
+          let isValid = true;
+
+          inputs.forEach((input) => {
+            if (!input.value.trim()) {
+              isValid = false;
+              showError(input, "此欄位為必填");
+            } else {
+              clearError(input);
+            }
+
+            if (input.type === "email" && input.value) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailRegex.test(input.value)) {
+                isValid = false;
+                showError(input, "請輸入有效的電子郵件地址");
+              }
+            }
+          });
+
+          return isValid;
+        }
+
+        function showError(input, message) {
+          const errorDiv = input.nextElementSibling?.classList.contains("error-message")
+            ? input.nextElementSibling
+            : document.createElement("div");
+
+          errorDiv.className = "error-message";
+          errorDiv.textContent = message;
+
+          if (!input.nextElementSibling?.classList.contains("error-message")) {
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+          }
+
+          input.classList.add("error");
+        }
+
+        function clearError(input) {
+          const errorDiv = input.nextElementSibling;
+          if (errorDiv?.classList.contains("error-message")) {
+            errorDiv.remove();
+          }
+          input.classList.remove("error");
+        }
+
+        function toggleDropdown(selector) {
+          const dropdown = document.querySelector(selector);
+          dropdown.classList.toggle("active");
+        }
+
+        function handleLogin(event) {
+          event.preventDefault();
+          const email = document.getElementById("email").value;
+          localStorage.setItem("loggedInEmail", email);
+          updateUIAfterLogin(email);
+          closeModal();
+        }
+
+        function handleLogout() {
+          localStorage.removeItem("loggedInEmail");
+          location.reload();
+        }
+
+        function handleSearch() {
+          const query = document.querySelector(".search-bar input").value;
+          alert(`搜尋: ${query}`);
+        }
+
+        function updateUIAfterLogin(email) {
+          document.querySelector(".btn-login").style.display = "none";
+          document.querySelector(".btn-register").style.display = "none";
+          document.querySelector(".user-email-container").style.display = "flex";
+          document.querySelector(".user-email").textContent = email;
+          document.querySelector(".cart-container").style.display = "flex";
+          document.querySelector(".notifications-container").style.display = "flex";
+        }
+
+        document.addEventListener("click", function (event) {
+          if (
+            !event.target.closest(".btn-notifications") &&
+            !event.target.closest(".notifications-dropdown")
+          ) {
+            document.querySelector(".notifications-dropdown").classList.remove("active");
+          }
+          if (
+            !event.target.closest(".btn-cart") &&
+            !event.target.closest(".cart-dropdown")
+          ) {
+            document.querySelector(".cart-dropdown").classList.remove("active");
+          }
+        });
+
+        function openLoginModal() {
+          document.getElementById("loginModal").style.display = "block";
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+          document.getElementById("loginModal").style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+        function initializeScrollEffects() {
+          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+              e.preventDefault();
+              const target = document.querySelector(this.getAttribute("href"));
+              if (target) {
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            });
+          });
+
+          const backToTop = document.createElement("button");
+          backToTop.innerHTML = "↑";
+          backToTop.className = "back-to-top";
+          backToTop.style.display = "none";
+          document.body.appendChild(backToTop);
+
+          window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+              backToTop.style.display = "block";
+            } else {
+              backToTop.style.display = "none";
+            }
+          });
+
+          backToTop.addEventListener("click", () => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+
+        function initializeCarousel() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+        }
+
+        function initializeVenuesSlider() {
+          const slider = document.querySelector(".venues-slider");
+          if (slider) {
+            setupVenuesSlider(slider);
+          }
+        }
+
+        function validateForm(form) {
+          const inputs = form.querySelectorAll("input[required]");
+          let isValid = true;
+
+          inputs.forEach((input) => {
+            if (!input.value.trim()) {
+              isValid = false;
+              showError(input, "此欄位為必填");
+            } else {
+              clearError(input);
+            }
+
+            if (input.type === "email" && input.value) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailRegex.test(input.value)) {
+                isValid = false;
+                showError(input, "請輸入有效的電子郵件地址");
+              }
+            }
+          });
+
+          return isValid;
+        }
+
+        function showError(input, message) {
+          const errorDiv = input.nextElementSibling?.classList.contains("error-message")
+            ? input.nextElementSibling
+            : document.createElement("div");
+
+          errorDiv.className = "error-message";
+          errorDiv.textContent = message;
+
+          if (!input.nextElementSibling?.classList.contains("error-message")) {
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+          }
+
+          input.classList.add("error");
+        }
+
+        function clearError(input) {
+          const errorDiv = input.nextElementSibling;
+          if (errorDiv?.classList.contains("error-message")) {
+            errorDiv.remove();
+          }
+          input.classList.remove("error");
+        }
+
+        function toggleDropdown(selector) {
+          const dropdown = document.querySelector(selector);
+          dropdown.classList.toggle("active");
+        }
+
+        function handleLogin(event) {
+          event.preventDefault();
+          const email = document.getElementById("email").value;
+          localStorage.setItem("loggedInEmail", email);
+          updateUIAfterLogin(email);
+          closeModal();
+        }
+
+        function handleLogout() {
+          localStorage.removeItem("loggedInEmail");
+          location.reload();
+        }
+
+        function handleSearch() {
+          const query = document.querySelector(".search-bar input").value;
+          alert(`搜尋: ${query}`);
+        }
+
+        function updateUIAfterLogin(email) {
+          document.querySelector(".btn-login").style.display = "none";
+          document.querySelector(".btn-register").style.display = "none";
+          document.querySelector(".user-email-container").style.display = "flex";
+          document.querySelector(".user-email").textContent = email;
+          document.querySelector(".cart-container").style.display = "flex";
+          document.querySelector(".notifications-container").style.display = "flex";
+        }
+
+        document.addEventListener("click", function (event) {
+          if (
+            !event.target.closest(".btn-notifications") &&
+            !event.target.closest(".notifications-dropdown")
+          ) {
+            document.querySelector(".notifications-dropdown").classList.remove("active");
+          }
+          if (
+            !event.target.closest(".btn-cart") &&
+            !event.target.closest(".cart-dropdown")
+          ) {
+            document.querySelector(".cart-dropdown").classList.remove("active");
+          }
+        });
+
+        function openLoginModal() {
+          document.getElementById("loginModal").style.display = "block";
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+          document.getElementById("loginModal").style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+
+        function initializeAnimations() {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("fade-in");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.1,
+              rootMargin: "0px",
+            }
+          );
+
+          const animatedElements = document.querySelectorAll(
+            ".feature-card, .event-card, .venue-card, .section-title"
+          );
+          animatedElements.forEach((el) => observer.observe(el));
+        }
+
+        function initializeSliders() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+
+          const venuesSlider = document.querySelector(".venues-slider");
+          if (venuesSlider) {
+            setupVenuesSlider(venuesSlider);
+          }
+        }
+
+        function setupCarousel(carousel) {
+          const track = carousel.querySelector(".carousel-track");
+          const slides = Array.from(track.children);
+          const nextButton = carousel.querySelector(".next");
+          const prevButton = carousel.querySelector(".prev");
+          const dotsContainer = carousel.querySelector(".carousel-dots");
+
+          slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.classList.add("carousel-dot");
+            if (index === 0) dot.classList.add("active");
+            dotsContainer.appendChild(dot);
+          });
+
+          const dots = Array.from(dotsContainer.children);
+          let currentSlide = 0;
+
+          const updateCarousel = (index) => {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === index);
+            });
+            currentSlide = index;
+          };
+
+          let autoplayInterval = setInterval(() => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+          }, 5000);
+
+          const resetAutoplay = () => {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(() => {
+              const nextIndex = (currentSlide + 1) % slides.length;
+              updateCarousel(nextIndex);
+            }, 5000);
+          };
+
+          nextButton.addEventListener("click", () => {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+            resetAutoplay();
+          });
+
+          prevButton.addEventListener("click", () => {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel(prevIndex);
+            resetAutoplay();
+          });
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => {
+              updateCarousel(index);
+              resetAutoplay();
+            });
+          });
+
+          let touchStartX = 0;
+          let touchEndX = 0;
+
+          carousel.addEventListener("touchstart", (e) => {
+            touchStartX = e.touches[0].clientX;
+          });
+
+          carousel.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            const difference = touchStartX - touchEndX;
+
+            if (Math.abs(difference) > 50) {
+              if (difference > 0) {
+                const nextIndex = (currentSlide + 1) % slides.length;
+                updateCarousel(nextIndex);
+              } else {
+                const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel(prevIndex);
+              }
+              resetAutoplay();
+            }
+          });
+        }
+
+        function setupVenuesSlider(slider) {
+          let isDown = false;
+          let startX;
+          let scrollLeft;
+
+          slider.addEventListener("mousedown", (e) => {
+            isDown = true;
+            slider.classList.add("active");
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+          });
+
+          slider.addEventListener("mouseleave", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mouseup", () => {
+            isDown = false;
+            slider.classList.remove("active");
+          });
+
+          slider.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+          });
+        }
+
+        function initializeModals() {
+          const loginBtn = document.querySelector(".btn-login");
+          const modal = document.getElementById("loginModal");
+
+          if (loginBtn && modal) {
+            loginBtn.addEventListener("click", () => {
+              modal.style.display = "flex";
+              document.body.style.overflow = "hidden";
+            });
+
+            modal.addEventListener("click", (e) => {
+              if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+
+            document.addEventListener("keydown", (e) => {
+              if (e.key === "Escape" && modal.style.display === "flex") {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+              }
+            });
+          }
+        }
+
+        function initializeSearch() {
+          const searchInput = document.querySelector(".search-bar input");
+          let searchTimeout;
+
+          if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+              clearTimeout(searchTimeout);
+              searchTimeout = setTimeout(() => {
+                console.log("搜尋:", e.target.value);
+              }, 500);
+            });
+          }
+        }
+
+        function initializeScrollEffects() {
+          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+              e.preventDefault();
+              const target = document.querySelector(this.getAttribute("href"));
+              if (target) {
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            });
+          });
+
+          const backToTop = document.createElement("button");
+          backToTop.innerHTML = "↑";
+          backToTop.className = "back-to-top";
+          backToTop.style.display = "none";
+          document.body.appendChild(backToTop);
+
+          window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+              backToTop.style.display = "block";
+            } else {
+              backToTop.style.display = "none";
+            }
+          });
+
+          backToTop.addEventListener("click", () => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+
+        function initializeCarousel() {
+          const carousel = document.querySelector(".events-carousel");
+          if (carousel) {
+            setupCarousel(carousel);
+          }
+        }
+
+        function initializeVenuesSlider() {
+          const slider = document.querySelector(".venues-slider");
+          if (slider) {
+            setupVenuesSlider(slider);
+          }
+        }
+
+        function validateForm(form) {
+          const inputs = form.querySelectorAll("input[required]");
+          let isValid = true;
+
+          inputs.forEach((input) => {
+            if (!input.value.trim()) {
+              isValid = false;
+              showError(input, "此欄位為必填");
+            } else {
+              clearError(input);
+            }
+
+            if (input.type === "email" && input.value) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailRegex.test(input.value)) {
+                isValid = false;
+                showError(input, "請輸入有效的電子郵件地址");
+              }
+            }
+          });
+
+          return isValid;
+        }
+
+        function showError(input, message) {
+          const errorDiv = input.nextElementSibling?.classList.contains("error-message")
+            ? input.nextElementSibling
+            : document.createElement("div");
+
+          errorDiv.className = "error-message";
+          errorDiv.textContent = message;
+
+          if (!input.nextElementSibling?.classList.contains("error-message")) {
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+          }
+
+          input.classList.add("error");
+        }
+
+        function clearError(input) {
+          const errorDiv = input.nextElementSibling;
+          if (errorDiv?.classList.contains("error-message")) {
+            errorDiv.remove();
+          }
+          input.classList.remove("error");
+        }
+
+        function toggleDropdown(selector) {
+          const dropdown = document.querySelector(selector);
+          dropdown.classList.toggle("active");
+        }
+
+        function handleLogin(event) {
+          event.preventDefault();
+          const email = document.getElementById("email").value;
+          localStorage.setItem("loggedInEmail", email);
+          updateUIAfterLogin(email);
+          closeModal();
+        }
+
+        function handleLogout() {
+          localStorage.removeItem("loggedInEmail");
+          location.reload();
+        }
+
+        function handleSearch() {
+          const query = document.querySelector(".search-bar input").value;
+          alert(`搜尋: ${query}`);
+        }
+
+        function updateUIAfterLogin(email) {
+          document.querySelector(".btn-login").style.display = "none";
+          document.querySelector(".btn-register").style.display = "none";
+          document.querySelector(".user-email-container").style.display = "flex";
+          document.querySelector(".user-email").textContent = email;
+          document.querySelector(".cart-container").style.display = "flex";
+          document.querySelector(".notifications-container").style.display = "flex";
+        }
+
+        document.addEventListener("click", function (event) {
+          if (
+            !event.target.closest(".btn-notifications") &&
+            !event.target.closest(".notifications-dropdown")
+          ) {
+            document.querySelector(".notifications-dropdown").classList.remove("active");
+          }
+          if (
+            !event.target.closest(".btn-cart") &&
+            !event.target.closest(".cart-dropdown")
+          ) {
+            document.querySelector(".cart-dropdown").classList.remove("active");
+          }
+        });
+
+        function openLoginModal() {
+          document.getElementById("loginModal").style.display = "block";
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+          document.getElementById("loginModal").style.display = "none";
+          document.body.style.overflow = "auto";
+        }
   // 初始化所有功能
   initializeNavigation();
   initializeAnimations();

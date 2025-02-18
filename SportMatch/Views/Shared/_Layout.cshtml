@@ -1,18 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/Content/reset.css" rel="stylesheet" type="text/css" />
-     <link href="/Content/_Layout.css" rel="stylesheet" type="text/css" /> 
-   
+  
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta charset="UTF-8">
+            <link rel="stylesheet" href="~/styles.css" asp-append-version="true" />
+            <link href="/Index/reset.css" rel="stylesheet" type="text/css" />
+    <link href="/Index/login.css" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-    <link href="/Content/login.css" rel="stylesheet" type="text/css" />
+        
 
-
-   
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <title>SportMatch</title>
 
 </head>
@@ -54,7 +53,7 @@
                             </div>
                         </div>
                         <button onclick="openLoginModal()" class="btn-login">登入</button>
-                        <a asp-controller="Register" asp-action="Register" target="_blank" class="btn-register">註冊</a>
+                        <a asp-controller="Register" asp-action="register" target="_blank" class="btn-register">註冊</a>
 
                         <div class="user-email-container" style="display: none">
                             <span class="user-email"></span>
