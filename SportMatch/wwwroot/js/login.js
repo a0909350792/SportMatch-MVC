@@ -46,28 +46,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 處理登入表單提交
     const loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener("submit", function (e) {
+    loginForm.addEventListener("submit", async function (e) {
         e.preventDefault(); // 防止表單提交
 
         const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
         const remember = document.getElementById("remember").checked;
 
-        if (remember) {
-            localStorage.setItem("savedEmail", email);
+        const response = await fetch('/Account/Login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ account: email, password: password }),
+        });
+
+        const errorMessageElement = document.querySelector(".error-message");
+
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success) {
+                if (remember) {
+                    localStorage.setItem("savedEmail", email);
+                } else {
+                    localStorage.removeItem("savedEmail");
+                }
+
+                // 儲存當前登錄的帳號
+                localStorage.setItem("loggedInEmail", email);
+
+                // 更新 UI
+                updateUIAfterLogin(email);
+
+                // 關閉登入彈窗
+                closeModal();
+
+                alert("登入成功！");
+            } else {
+                errorMessageElement.textContent = "登入失敗，請檢查帳號和密碼。";
+                errorMessageElement.style.display = "block";
+            }
         } else {
-            localStorage.removeItem("savedEmail");
+            errorMessageElement.textContent = "登入失敗，請稍後再試。";
+            errorMessageElement.style.display = "block";
         }
-
-        // 儲存當前登錄的帳號
-        localStorage.setItem("loggedInEmail", email);
-
-        // 更新 UI
-        updateUIAfterLogin(email);
-
-        // 關閉登入彈窗
-        closeModal();
-
-        alert("登入成功！");
     });
 
     const togglePassword = document.querySelector(".toggle-password");
@@ -98,6 +120,21 @@ document.addEventListener("DOMContentLoaded", function () {
     if (loggedInEmail) {
         updateUIAfterLogin(loggedInEmail);
     }
+
+    // 點擊空白處隱藏浮窗
+    document.addEventListener("click", function (event) {
+        const userEmailContainer = document.querySelector(".user-email-container");
+        const dropdownContent = document.querySelector(".dropdown-content");
+        if (!userEmailContainer.contains(event.target)) {
+            dropdownContent.style.display = "none";
+        }
+    });
+
+    // 點擊 email 顯示浮窗
+    document.querySelector(".user-email").addEventListener("click", function () {
+        const dropdownContent = document.querySelector(".dropdown-content");
+        dropdownContent.style.display = "block";
+    });
 });
 
 function updateUIAfterLogin(email) {

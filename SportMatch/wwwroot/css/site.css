@@ -39,11 +39,23 @@ body {
   cursor: grabbing;
 }
 
+@media (max-width: 768px) {
+    .feature-card {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-card {
+        flex: 1 1 100%;
+    }
+}
 
 /* 內容區域 */
 .content {
     margin: 0 auto;
     max-width: 1200px;
+}
     
     :root {
         --primary-color: #4a90e2;
@@ -81,10 +93,11 @@ body {
         margin-bottom: 20px;
     }
 
-    .shop-item img {
-        width: 100%;
-        border-radius: var(--border-radius);
-    }
+        .shop-item img {
+            width: 200px;
+            height: 200px;
+            border-radius: var(--border-radius);
+        }
 
     .shop-item button {
         background-color: var(--secondary-color);
@@ -98,7 +111,12 @@ body {
     .shop-item button:hover {
         background-color: #e55b00;
     }
-
+/* 隱藏商品區塊在小螢幕上 */
+@media (max-width: 768px) {
+    .shop-section {
+        display: none;
+    }
+}
    
 /* 全局樣式 */
 * {
@@ -166,87 +184,22 @@ html, body {
   max-width: 1200px;
 }
 
-/* 左側和右側廣告區塊 */
-.shop-section {
-  width: 250px; /* 廣告寬度 */
-  position: fixed;
-  top: calc(100vh + 20px); /* hero-section 之下 */
-  background-color: var(--light-bg);
-  padding: 20px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+
+@media (max-width: 768px) {
+    .shop-section {
+        width: 50%;
+    }
+}
+@media (max-width: 480px) {
+    .shop-section {
+        width: 100%;
+    }
 }
 
-/* 每個商品 */
-.shop-item {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.shop-item img {
-  width: 100%;
-  border-radius: var(--border-radius);
-}
-
-.shop-item button {
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  cursor: pointer;
-  border-radius: var(--border-radius);
-}
-
-.shop-item button:hover {
-  background-color: #e55b00;
-}
-
-/* Hero 區域 */
-.hero-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* 填滿當下section */
-  overflow: hidden;
-  width: 100%;
-}
-
-.hero-section img {
-  opacity: 0.2;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; /* 確保圖片在內容後面 */
-}
-
-.hero-content {
-  position: relative;
-  text-align: center;
-  color: white;
-}
-
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: red;
-  border: 5px solid red;
-  border-radius: var(--border-radius);
-}
-
-.hero-content p {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: palevioletred;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+@media (max-width: 768px) {
+    .hero-buttons {
+        flex-direction: column;
+    }
 }
 
 /* 按鈕樣式 */
@@ -426,8 +379,6 @@ html, body {
         box-shadow: 0 3px 10px rgba(59, 130, 246, 0.2);
     }
 
-    /* 其他樣式... */
-}
 
 /* 左側和右側廣告區塊 */
 .shop-section {
