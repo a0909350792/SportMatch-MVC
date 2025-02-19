@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Include="wwwroot\Index\reset.css" />
     <None Include="wwwroot\js\_Layout.js" />
-    <None Include="wwwroot\styles.css" />
   </ItemGroup>
 
   <ItemGroup>
