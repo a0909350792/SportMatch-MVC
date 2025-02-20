@@ -1,27 +1,17 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SportMatch.Models;
+using SportMatch.Services;  
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
-
-builder.Services.AddDbContext<UserContext>(  // 改成 UserContext
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Account/Login";  // 設置登入頁面路徑
-        options.LogoutPath = "/Account/Logout"; // 設置登出路徑
-    });
+builder.Services.AddDbContext<SportMatchContext>(
+            options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<AuthenticationService>();
 
 var app = builder.Build();
 

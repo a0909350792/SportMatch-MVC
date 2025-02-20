@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace SportMatch.Models;
 
-public partial class Register
+public partial class Login
 {
     public int Id { get; set; }
 
-    public string UserName { get; set; } = null!;
-
-    public string Email { get; set; } = null!;
+    public string Account { get; set; } = null!;
 
     public string Password { get; set; } = null!;
 }
