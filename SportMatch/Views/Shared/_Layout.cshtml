@@ -1,78 +1,80 @@
-﻿<!DOCTYPE html>
+﻿@model SportMatch.Models.User
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta charset="UTF-8">
-            <link rel="stylesheet" href="~/SportMatch.styles.css" asp-append-version="true" />            
-            <link href="/Index/reset.css" rel="stylesheet" type="text/css" />
-            <link href="/Index/login.css" rel="stylesheet" type="text/css" />
-            <link rel="stylesheet"
-                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-
-        
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="~/SportMatch.styles.css"
+      asp-append-version="true"
+    />
+    <link href="/Index/reset.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 
     <title>SportMatch</title>
-
-</head>
+	
+  </head>
 
 <body>
-    <header>
+    <div class="header-container">
+        <div class="logo">
+            <!-- Logo 這裡可以放置你的網站 Logo -->
+        </div>
 
-        <div class="header-container">
-            <div class="logo">
-                <!-- Logo 這裡可以放置你的網站 Logo -->
-            </div>
-
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#home">首頁</a></li>
-                    <li><a href="#matching" onclick="checkLoginStatus(event)">配對系統</a></li>
-                    <li><a href="#events" onclick="checkLoginStatus(event)">賽事資訊</a></li>
-                    <li><a href="#venues">場地資訊</a></li>
-                    <li><a href="#shop" onclick="checkLoginStatus(event)">運動商城</a></li>
-                </ul>
-                <div class="header-actions">
-                    <div class="user-actions">
-                        <div class="cart-container" style="display: none">
-                            <button class="btn-cart" data-count="0" onclick="toggleCart()">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                            <div class="cart-dropdown">
-                                <div class="no-cart-items">目前購物車是空的</div>
-                            </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#matching">配對系統</a></li>
+                <li><a href="#events">賽事資訊</a></li>
+                <li><a href="#venues">場地資訊</a></li>
+                <li><a href="#shop">運動商城</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="user-actions">
+                    <div class="cart-container" style="display: none">
+                        <button class="btn-cart" data-count="0" onclick="toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                        <div class="cart-dropdown">
+                            <div class="no-cart-items">目前購物車是空的</div>
                         </div>
-                        <div class="notifications-container" style="display: none">
-                            <button class="btn-notifications"
-                                    data-count="0"
-                                    onclick="toggleNotifications()">
-                                <i class="fas fa-bell"></i>
-                            </button>
-                            <div class="notifications-dropdown">
-                                <div class="no-notifications">目前沒有任何通知</div>
-                            </div>
+                    </div>
+                    <div class="notifications-container" style="display: none">
+                        <button class="btn-notifications"
+                                data-count="0"
+                                onclick="toggleNotifications()">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="notifications-dropdown">
+                            <div class="no-notifications">目前沒有任何通知</div>
                         </div>
-                        <button onclick="openLoginModal()" class="btn-login">登入</button>
-                        <a asp-controller="Register" asp-action="register" target="_blank" class="btn-register">註冊</a>
+                    </div>
+                    <button onclick="openLoginModal()" class="btn-login">登入</button>
+                    <a href="@Url.Action("Register", "Account")" class="btn-register">註冊</a>
+                    <div class="user-email-container" style="display: none">
+                        <span class="user-email"></span>
+                        <div class="dropdown-content">
+                            <a href="#profile">個人資料</a>
+                            <a href="#matches">配對資訊</a>
 
-                        <div class="user-email-container" style="display: none">
-                            <span class="user-email"></span>
-                            <div class="dropdown-content">
-                                <a href="#profile">個人資料</a>
-                                <a href="#matches">配對資訊</a>
-                                <a href="#cart">購物車清單</a>
-                                <a href="#favorites">收藏清單</a>
-                                <button class="btn-logout" onclick="handleLogout()">
-                                    登出
-                                </button>
-                            </div>
+                            <a href="#cart">購物車清單</a>
+                            <a href="#favorites">收藏清單</a>
+                            <button class="btn-logout" onclick="handleLogout()">
+                                登出
+                            </button>
                         </div>
                     </div>
                 </div>
-            </nav>
-        </div>
-    </header>
+            </div>
+        </nav>
+    </div>
+    
     <!-- 登入彈窗 -->
+
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <div class="login-header">
@@ -84,10 +86,10 @@
                     <i class="fas fa-volleyball-ball"></i>
                 </div>
             </div>
-            <form id="loginForm" action="/Account/Login" method="post" class="login-form" onsubmit="handleLogin(event)">
+            <form action="/Account/Login" method="post" class="login-form" id="loginForm">
                 <div class="input-group">
                     <i class="fas fa-person"></i>
-                    <input type="email" id="email" placeholder="運動員帳號" required />
+                    <input type="email" id="email" placeholder="請輸入Email" required />
                     <button type="button" class="toggle-password">
                         <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon>
@@ -97,7 +99,7 @@
 
                 <div class="input-group password-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="密碼" required />
+                    <input type="password" id="password" placeholder="請輸入密碼" required />
                     <button type="button" class="toggle-password">
                         <span class="icon">
                             <ion-icon name="eye-off-outline" id="Pwhide"></ion-icon>
@@ -111,21 +113,16 @@
                         記住我的帳號
                     </label>
                 </div>
+                <div class="error-message" style="display:none;"></div>     
+
                 <button type="submit" class="btn-submit">
                     <i class="fas fa-running"></i> 開始運動
                 </button>
                 <div class="form-footer">
-                    <a asp-controller="Forgotpassword" asp-action="forgotpassword" target="_blank" class="btn-forgotpassword">忘記密碼</a>
-                    <p class="no-account">沒有帳號?</p>
-
-                    <a asp-controller="Register" asp-action="Register" target="_blank" class="btn-register2">現在註冊</a>
-
+                    <a href="../forgotPassoword/forgot-password.html"><i class="fas fa-key"></i> 忘記密碼？</a>
+                     <a href="@Url.Action("Register", "Account")"><i class="fas fa-user-plus"></i> 加入會員</a>
                 </div>
             </form>
-            @if (ViewBag.ErrorMessage != null)
-            {
-                <div class="error-message">@ViewBag.ErrorMessage</div>
-            }
             <div class="social-login">
                 <p>其他登入方式</p>
                 <div class="social-buttons">
@@ -140,33 +137,31 @@
             </div>
         </div>
     </div>
-    <script type="module"
-            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule
-            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
-    <script src="/js/login.js"></script>
 
-  
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    
+
+    <script src="~/js/login.js"></script>
 
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+      <main role="main" class="pb-3">@RenderBody()</main>
     </div>
-</body>
-
-    
-   
-    
+  </body>
 </html>
 <footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - SportMatch - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
+  <div class="container">
+    &copy; 2025 - SportMatch -
+    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+  </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/_Layout.js" type="text/javascript"></script>
 
-@await RenderSectionAsync("scripts", required: false)

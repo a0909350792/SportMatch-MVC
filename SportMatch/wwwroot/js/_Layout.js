@@ -1,6 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     // 初始化所有功能
-    initializeNavigation();
     initializeAnimations();
     initializeSliders();
     initializeModals();
@@ -15,38 +14,7 @@
     }
 });
 
-// 導航欄功能
-function initializeNavigation() {
-    const header = document.querySelector(".main-header");
-    let lastScroll = 0;
 
-    // 滾動時改變導航欄樣式
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.scrollY;
-
-        if (currentScroll <= 0) {
-            header.classList.remove("scroll-up");
-            return;
-        }
-
-        if (
-            currentScroll > lastScroll &&
-            !header.classList.contains("scroll-down")
-        ) {
-            // 向下滾動
-            header.classList.remove("scroll-up");
-            header.classList.add("scroll-down");
-        } else if (
-            currentScroll < lastScroll &&
-            header.classList.contains("scroll-down")
-        ) {
-            // 向上滾動
-            header.classList.remove("scroll-down");
-            header.classList.add("scroll-up");
-        }
-        lastScroll = currentScroll;
-    });
-}
 
 // 動畫效果
 function initializeAnimations() {
@@ -205,44 +173,37 @@ function initializeSliders() {
 function initializeModals() {
     const loginBtn = document.querySelector(".btn-login");
     const modal = document.getElementById("loginModal");
+    const closeModal = document.querySelector(".close-modal");
 
     if (loginBtn && modal) {
         loginBtn.addEventListener("click", () => {
-            modal.style.display = "flex";
-            document.body.style.overflow = "hidden";
+            modal.classList.add("show");
+            document.body.classList.add("modal-open"); // 禁用頁面滾動
         });
 
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
-            }
+        closeModal.addEventListener("click", () => {
+            modal.classList.remove("show");
+            document.body.classList.remove("modal-open"); // 允許滾動
         });
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && modal.style.display === "flex") {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
+            if (e.key === "Escape" && modal.classList.contains("show")) {
+                modal.classList.remove("show");
+                document.body.classList.remove("modal-open");
             }
         });
     }
 }
+window.onload = function () {
+    if (localStorage.getItem("showLoginModal") === "true") {
+        document.getElementById("loginModal").classList.add("show");
+        localStorage.removeItem("showLoginModal"); // 移除標記，避免刷新時再次彈出
+    }
+};
+};
 
 // 搜尋功能
-function initializeSearch() {
-    const searchInput = document.querySelector(".search-bar input");
-    let searchTimeout;
 
-    if (searchInput) {
-        searchInput.addEventListener("input", (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                // 這裡添加搜尋邏輯
-                console.log("搜尋:", e.target.value);
-            }, 500);
-        });
-    }
-}
 
 // 滾動效果
 function initializeScrollEffects() {
@@ -260,27 +221,7 @@ function initializeScrollEffects() {
         });
     });
 
-    // 返回頂部按鈕
-    const backToTop = document.createElement("button");
-    backToTop.innerHTML = "↑";
-    backToTop.className = "back-to-top";
-    backToTop.style.display = "none";
-    document.body.appendChild(backToTop);
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            backToTop.style.display = "block";
-        } else {
-            backToTop.style.display = "none";
-        }
-    });
-
-    backToTop.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    });
+    
 }
 
 // 輪播圖功能
@@ -529,3 +470,62 @@ window.onload = function () {
     }
 };
 
+document.querySelector('.modal').classList.add('show');
+document.body.classList.add('modal-open');  // 禁用滾動
+document.querySelector('.close-modal').addEventListener('click', function () {
+    document.querySelector('.modal').classList.remove('show');
+    document.body.classList.remove('modal-open');  // 恢復滾動
+});
+
+document.querySelector(".btn-login").addEventListener("click", function () {
+    document.getElementById("loginModal").classList.add("show");
+    disableScroll();
+});
+
+document.querySelector(".close-modal").addEventListener("click", function () {
+    document.getElementById("loginModal").classList.remove("show");
+    enableScroll();
+});
+
+function disableScroll() {
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+}
+
+function enableScroll() {
+    document.body.style.overflow = "auto";
+    document.body.style.position = "";
+    document.body.style.width = "";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.querySelector(".modal");
+    const openModalBtns = document.querySelectorAll(".open-modal");
+    const closeModalBtns = document.querySelectorAll(".close-modal");
+
+    openModalBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            modal.classList.add("show");
+            document.documentElement.classList.add("modal-open"); // 避免滾動
+            document.body.classList.add("modal-open"); // 避免滾動
+        });
+    });
+
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            modal.classList.remove("show");
+            document.documentElement.classList.remove("modal-open"); // 恢復滾動
+            document.body.classList.remove("modal-open"); // 恢復滾動
+        });
+    });
+
+    // 點擊 modal 外部關閉
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.classList.remove("show");
+            document.documentElement.classList.remove("modal-open");
+            document.body.classList.remove("modal-open");
+        }
+    });
+});
