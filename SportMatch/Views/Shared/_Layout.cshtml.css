@@ -604,6 +604,10 @@ h2 {
     }
 
 /* 提交按鈕 */
+
+#btn-submit {
+    margin-left: 170px;
+}
 .btn-submit {
     background: var(--primary-color);
     color: white;
@@ -628,6 +632,7 @@ h2 {
         transform: translateY(1px);
         box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
     }
+
 
 /* 記住我 */
 .remember-me {

@@ -1,54 +1,22 @@
 /* 全局樣式 */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* 防止水平滾動 */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* 防止水平滾動 */
 }
 
-.main-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.events-carousel {
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.venues-slider {
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: grab;
-}
-
-.venues-slider.active {
-  cursor: grabbing;
-}
-
-@media (max-width: 768px) {
-    .feature-card {
-        flex: 1 1 calc(50% - 20px);
-    }
-}
-
-@media (max-width: 480px) {
-    .feature-card {
-        flex: 1 1 100%;
-    }
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #ff6600;
+    --light-bg: #f8f8f8;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* 內容區域 */
@@ -56,281 +24,21 @@ body {
     margin: 0 auto;
     max-width: 1200px;
 }
-    
-    :root {
-        --primary-color: #4a90e2;
-        --secondary-color: #ff6600;
-        --light-bg: #f8f8f8;
-        --border-radius: 8px;
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-
-
-    /* 內容區域 */
-    .content {
-        margin: 0 auto;
-        max-width: 1200px;
-    }
-
-    /* 左側和右側廣告區塊 */
-    .shop-section {
-        width: 250px; /* 廣告寬度 */
-        position: fixed;
-        top: 100px; /* 距離頂部的距離 */
-        background-color: var(--light-bg);
-        padding: 20px;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-    }
-
-    /* 每個商品 */
-    .shop-item {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-        .shop-item img {
-            width: 200px;
-            height: 200px;
-            border-radius: var(--border-radius);
-        }
-
-    .shop-item button {
-        background-color: var(--secondary-color);
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        cursor: pointer;
-        border-radius: var(--border-radius);
-    }
-
-    .shop-item button:hover {
-        background-color: #e55b00;
-    }
-/* 隱藏商品區塊在小螢幕上 */
-@media (max-width: 768px) {
-    .shop-section {
-        display: none;
-    }
-}
-   
-/* 全局樣式 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* 防止水平滾動 */
-}
-
-.main-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.events-carousel {
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.venues-slider {
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: grab;
-}
-
-.venues-slider.active {
-  cursor: grabbing;
-}
-
-/* 內容區域 */
-.content {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
-:root {
-  --primary-color: #4a90e2;
-  --secondary-color: #ff6600;
-  --light-bg: #f8f8f8;
-  --border-radius: 8px;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-
-}
-
-
-@media (max-width: 768px) {
-    .shop-section {
-        width: 50%;
-    }
-}
-@media (max-width: 480px) {
-    .shop-section {
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-buttons {
-        flex-direction: column;
-    }
-}
 
 /* 按鈕樣式 */
 .btn-primary, .btn-secondary {
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease, transform 0.3s ease;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .btn-primary {
-  background: var(--primary-color);
+    background: var(--primary-color);
 }
-
-.btn-primary:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-}
-
-.btn-primary:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
-}
-
-.btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
-}
-
-.btn-secondary {
-  background: var(--secondary-color);
-}
-
-.btn-secondary:hover {
-  background: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
-}
-
-.btn-secondary:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-}
-
-.btn-secondary:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.2);
-}
-
-/* 其他樣式... */
-
-/* 左側廣告 */
-.left-shop {
-  position: fixed;
-  left: 20px; /* 距離頁面左側 20px */
-  top: calc(100vh + 20px); /* hero-section 之下 */
-  width: 250px; /* 廣告寬度 */
-  background-color: #f8f8f8;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 右側廣告 */
-.right-shop {
-  position: fixed;
-  right: 20px; /* 距離頁面右側 20px */
-  top: calc(100vh + 20px); /* hero-section 之下 */
-  width: 250px; /* 廣告寬度 */
-  background-color: #f8f8f8;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 其他樣式... */
-    /* Hero 區域 */
-    .hero-section {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh; /* 填滿當下section */
-        overflow: hidden;
-        width: 100%;
-    }
-
-    .hero-section img {
-        opacity: 0.2;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1; /* 確保圖片在內容後面 */
-    }
-
-    .hero-content {
-        position: relative;
-        text-align: center;
-        color: white;
-    }
-
-    .hero-content h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: red;
-        border: 5px solid red;
-        border-radius: var(--border-radius);
-    }
-
-    .hero-content p {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        color: palevioletred;
-    }
-
-    .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    /* 按鈕樣式 */
-    .btn-primary, .btn-secondary {
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .btn-primary {
-        background: var(--primary-color);
-    }
 
     .btn-primary:hover {
         background: var(--secondary-color);
@@ -348,9 +56,9 @@ body {
         box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
     }
 
-    .btn-secondary {
-        background: var(--secondary-color);
-    }
+.btn-secondary {
+    background: var(--secondary-color);
+}
 
     .btn-secondary:hover {
         background: var(--primary-color);
@@ -368,72 +76,30 @@ body {
         box-shadow: 0 3px 10px rgba(59, 130, 246, 0.2);
     }
 
-
-/* 左側和右側廣告區塊 */
-.shop-section {
-    width: 250px; /* 廣告寬度 */
+/* 左側廣告 */
+.left-shop, .right-shop {
     position: fixed;
     top: 100px; /* 距離頂部的距離 */
+    width: 250px; /* 廣告寬度 */
     background-color: #f8f8f8;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
-
-
-
-
-
-/* 每個商品 */
-.shop-item {
-    text-align: center;
-    margin-bottom: 20px;
+.left-shop {
+    left: 20px; /* 距離頁面左側 20px */
 }
 
-    .shop-item img {
-        width: 100%;
-        border-radius: 8px;
-    }
-
-    .shop-item button {
-        background-color: #ff6600;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-        .shop-item button:hover {
-            background-color: #e55b00;
-        }
-    /* 左側廣告 */
-    .left-shop {
-        position: fixed;
-        left: 20px; /* 距離頁面左側 20px */
-        top: 100px; /* 距離頂部的距離 */
-        width: 250px; /* 廣告寬度 */
-        background-color: #f8f8f8;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 右側廣告 */
-    .right-shop {
-        position: fixed;
-        right: 20px; /* 距離頁面右側 20px */
-        top: 100px; /* 距離頂部的距離 */
-        width: 250px; /* 廣告寬度 */
-        background-color: #f8f8f8;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    }
-        
-
+.right-shop {
+    right: 20px; /* 距離頁面右側 20px */
+}
+.shop-section img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+/* Hero 區域 */
 .hero-section {
     position: relative;
     display: flex;
@@ -466,7 +132,7 @@ body {
         margin-bottom: 1rem;
         color: red;
         border: 5px solid red;
-        border-radius: 20px;
+        border-radius: var(--border-radius);
     }
 
     .hero-content p {
@@ -481,60 +147,29 @@ body {
     justify-content: center;
 }
 
-/* 按鈕樣式 */
-.btn-primary {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease, transform 0.3s ease;
+/* 每個商品 */
+.shop-item {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-    .btn-primary:hover {
-        background: var(--secondary-color);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    .shop-item img {
+        width: 100%;
+        border-radius: 8px;
     }
 
-    .btn-primary:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+    .shop-item button {
+        background-color: #ff6600;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 5px;
     }
 
-    .btn-primary:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
-    }
-
-.btn-secondary {
-    background: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-    .btn-secondary:hover {
-        background: var(--primary-color);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-secondary:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-    }
-
-    .btn-secondary:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 10px rgba(59, 130, 246, 0.2);
-    }
+        .shop-item button:hover {
+            background-color: #e55b00;
+        }
 
 /* 特色功能區樣式 */
 .features-section {
@@ -765,209 +400,11 @@ body {
     top: 10px;
     right: 10px;
     background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+    border: none
 }
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-    .login-form input {
-        padding: 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: var(--border-radius);
-    }
-
-/* 響應式設計 */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
-    }
-
-    .main-nav ul {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .carousel-slide img {
-        height: 300px;
-    }
-}
-
-/* 可訪問性改進 */
-a:focus,
-button:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-.login-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-    .login-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
-    }
-
-    .login-btn:active {
-        transform: translateY(1px);
-    }
 
 .error-message {
     color: red;
     font-size: 0.9rem;
     margin-top: 5px;
-}
-
-/* 註冊容器 */
-.register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-}
-
-/* 註冊卡片 */
-.register-card {
-    width: 100%;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.9); /* 半透明背景 */
-    backdrop-filter: blur(10px); /* 背景霧化 */
-    border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.register-title {
-    text-align: center;
-    color: #4a90e2;
-    margin-bottom: 1.5rem;
-}
-
-.register-form .form-group {
-    margin-bottom: 1rem;
-}
-
-.register-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #333;
-}
-
-.register-form input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-/* 發送驗證碼按鈕 */
-.btn-send-code {
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
-}
-
-    .btn-send-code:hover {
-        background: #2980b9;
-    }
-
-    .btn-send-code:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
-    }
-
-    .btn-send-code:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
-    }
-
-/* 註冊按鈕 */
-.btn-submit {
-    width: 100%;
-    padding: 0.75rem;
-    background: wheat;
-    color: black;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-    .btn-submit:hover {
-        background: red;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn-submit:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
-    }
-
-    .btn-submit:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
-    }
-
-/* 註冊頁腳 */
-.register-footer {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555;
-}
-
-    .register-footer a {
-        color: #3498db;
-        text-decoration: none;
-    }
-
-        .register-footer a:hover {
-            text-decoration: underline;
-        }
-
-/* 註冊成功通知樣式 */
-#successNotification {
-    position: fixed;
-    top: 50%; /* 垂直居中 */
-    left: 50%; /* 水平居中 */
-    transform: translate(-50%, -50%); /* 修正偏移量，達到真正居中 */
-    background-color: #4caf50; /* 綠色背景 */
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0; /* 初始隱藏 */
-    display: none; /* 初始隱藏 */
-    transition: opacity 0.5s ease, transform 0.5s ease;
 }
