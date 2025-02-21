@@ -4,17 +4,13 @@ using System.Linq;
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
+using System.Net.Mail;
 
 namespace SportMatch.Controllers
 {
     public class AccountController : Controller
     {
-        // 註冊頁面
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View(); // 返回註冊視圖
-        }
         private readonly UserContext _context;
         private readonly IConfiguration _configuration;
 
@@ -24,7 +20,20 @@ namespace SportMatch.Controllers
             _configuration = configuration;
         }
 
-        // 1. 發送驗證碼接口
+        // 註冊頁面
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(); // 返回註冊視圖
+        }
+
+        // 忘記密碼頁面
+        public IActionResult ForgotPassword()
+        {
+            return View(); // 返回忘記密碼視圖
+        }
+
+        // 發送驗證碼接口
         [HttpPost]
         public IActionResult SendVerificationCode([FromBody] EmailModel model)
         {
@@ -33,12 +42,32 @@ namespace SportMatch.Controllers
                 return BadRequest(new { success = false, message = "電子郵件不可為空" });
             }
 
+            // 檢查電子郵件是否已註冊
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+            if (existingUser != null)
+            {
+                return BadRequest(new { success = false, message = "此電子郵件已註冊" });
+            }
+
+            // 檢查是否在30秒內發送過驗證碼
+            if (TempData["LastSentTime"] != null && (DateTime.Now - (DateTime)TempData["LastSentTime"]).TotalSeconds < 30)
+            {
+                return BadRequest(new { success = false, message = "請等待30秒後再發送驗證碼" });
+            }
+
+            // 生成驗證碼
             var verificationCode = GenerateVerificationCode();
+
+            // 儲存驗證碼及電子郵件
+            TempData["VerificationCode"] = verificationCode;
+            TempData["Email"] = model.Email;
+            TempData["LastSentTime"] = DateTime.Now;
+
+            // 發送電子郵件
             bool isSent = SendEmail(model.Email, "您的驗證碼", $"您的驗證碼是：{verificationCode}");
 
             if (isSent)
             {
-                // 可以選擇將驗證碼保存到資料庫或緩存中
                 return Ok(new { success = true, message = "驗證碼已發送" });
             }
             else
@@ -47,7 +76,14 @@ namespace SportMatch.Controllers
             }
         }
 
-        // 2. 註冊接口
+        // 驗證驗證碼是否正確
+        private bool VerifyVerificationCode(string enteredCode)
+        {
+            string storedVerificationCode = TempData["VerificationCode"]?.ToString();
+            return storedVerificationCode == enteredCode;
+        }
+
+        // 註冊接口
         [HttpPost]
         public IActionResult Register([FromBody] RegisterModel model)
         {
@@ -58,6 +94,12 @@ namespace SportMatch.Controllers
                 if (existingUser != null)
                 {
                     return BadRequest(new { success = false, message = "該郵箱已被註冊" });
+                }
+
+                // 檢查驗證碼是否正確
+                if (!VerifyVerificationCode(model.VerificationCode))
+                {
+                    return BadRequest(new { success = false, message = "驗證碼不正確，請重新發送驗證碼" });
                 }
 
                 // 密碼加密（這裡使用的是簡單示範，實際應使用加密算法，如 BCrypt 或 ASP.NET Identity）
@@ -80,13 +122,27 @@ namespace SportMatch.Controllers
             return BadRequest(new { success = false, message = "註冊資料不正確" });
         }
 
-        // 3. 登入接口
+        // 驗證信箱中的驗證碼
+        [HttpPost]
+        public IActionResult VerifyEmail([FromBody] VerificationModel model)
+        {
+            // 驗證碼是否正確
+            if (!VerifyVerificationCode(model.VerificationCode))
+            {
+                return BadRequest(new { success = false, message = "驗證碼錯誤，請重新發送驗證碼" });
+            }
+
+            // 驗證成功
+            return Ok(new { success = true, message = "驗證成功" });
+        }
+
+        // 登入接口
         [HttpPost]
         public IActionResult Login([FromBody] LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                bool loginSuccess = ValidateUser(model.Email!, model.Password!);
+                bool loginSuccess = ValidateUser(model.Email, model.Password);
 
                 if (loginSuccess)
                 {
@@ -121,12 +177,41 @@ namespace SportMatch.Controllers
             return random.Next(1000, 9999).ToString();
         }
 
-        // 幫助方法：模擬發送電子郵件（實際應該用真正的電子郵件發送服務）
+        // 幫助方法：發送電子郵件
         private bool SendEmail(string toEmail, string subject, string body)
         {
-            // 在這裡使用您自己的發送郵件邏輯
-            Console.WriteLine($"發送郵件到: {toEmail}, 主題: {subject}, 內容: {body}");
-            return true;  // 假設郵件發送成功
+            try
+            {
+                var smtpClient = new SmtpClient(_configuration["EmailSettings:SMTPHost"])
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential(_configuration["EmailSettings:SMTPUser"], _configuration["EmailSettings:SMTPPassword"]),
+                    EnableSsl = true
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_configuration["EmailSettings:SMTPUser"]),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(toEmail);
+
+                smtpClient.Send(mailMessage);
+                return true;
+            }
+            catch (SmtpException smtpEx)
+            {
+                Console.WriteLine($"SMTP 發送錯誤: {smtpEx.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"發送郵件時出錯: {ex.Message}");
+                return false;
+            }
         }
     }
 
@@ -136,6 +221,7 @@ namespace SportMatch.Controllers
         public string? Username { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
+        public string VerificationCode { get; set; } // 驗證碼
     }
 
     // 定義登入模型
@@ -149,5 +235,11 @@ namespace SportMatch.Controllers
     public class EmailModel
     {
         public string? Email { get; set; }
+    }
+
+    // 定義驗證碼模型
+    public class VerificationModel
+    {
+        public string VerificationCode { get; set; } // 驗證碼
     }
 }

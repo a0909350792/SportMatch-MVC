@@ -1,11 +1,4 @@
 ﻿
-html, body {
-    overflow-x: hidden; /* 隱藏水平滾動條 */
-    overflow-y: auto; /* 讓整個頁面只有一個垂直滾動條 */
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
 
 /* 預設頁面可以滾動 */
 body {
@@ -573,7 +566,7 @@ h2 {
 .password-group {
     position: relative;
 }
-
+.toggle-email,
 .toggle-password {
     position: absolute;
     right: 1rem;
@@ -584,7 +577,7 @@ h2 {
     cursor: pointer;
     color: var(--primary-color);
 }
-
+.toggle-email,
 .toggle-password {
     background: none;
     border: none;

@@ -65,10 +65,7 @@ body {
         --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    /* Hero 區域樣式 */
-    html, body {
-        overflow: auto !important;
-    }
+
 
     /* 內容區域 */
     .content {
@@ -173,15 +170,7 @@ body {
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Hero 區域樣式 */
-html, body {
-  overflow: auto !important;
-}
 
-/* 內容區域 */
-.content {
-  margin: 0 auto;
-  max-width: 1200px;
 }
 
 
