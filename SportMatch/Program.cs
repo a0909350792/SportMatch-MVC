@@ -30,6 +30,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=MemberCenter}/{action=Index}/{id?}");
 
-app.Run();
+// app.Run();
+
+app.Run("https://localhost:7106"); 

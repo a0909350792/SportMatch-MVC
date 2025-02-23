@@ -1,7 +1,8 @@
 ﻿
 body {
 }
- 基本變數 
+
+基本變數
 :root {
     --primary-color: #2563eb;
     --secondary-color: #3b82f6;
@@ -16,7 +17,7 @@ body {
     --line-height: 1.6;
 }
 
- 通用樣式重置 
+通用樣式重置
 body,
 h1,
 p,
@@ -30,7 +31,7 @@ button {
     font-family: "Arial", sans-serif;
 }
 
- 基本排版 
+基本排版
 body {
     font-family: var(--font-family);
     line-height: var(--line-height);
@@ -44,13 +45,13 @@ body {
     padding: 0 20px;
 }
 
- 導航欄樣式 
+導航欄樣式
 .main-header {
     background: white;
     box-shadow: var(--shadow);
     width: 100%;
     z-index: 1000;
-    position: fixed;  
+    position: fixed;
     top: 0;
     left: 0;
 }
@@ -106,7 +107,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;  
+    gap: 2rem;
 }
 
     .header-actions .search-bar {
@@ -189,7 +190,7 @@ body {
             }
 
 
-media screen and (max-width: 768px) 
+@media screen and (max-width: 768px) {
     .main-nav ul {
         flex-direction: column;
         text-align: center;
@@ -205,24 +206,24 @@ media screen and (max-width: 768px)
     }
 
 
- 按鈕樣式 
-.btn-login,
-.btn-register {
-    padding: 8px 16px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-}
+    按鈕樣式
+    .btn-login,
+    .btn-register {
+        padding: 8px 16px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+    }
 
-.btn-login {
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 8px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
+    .btn-login {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        padding: 8px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
 
     .btn-login:hover {
         background: var(--primary-color);
@@ -241,33 +242,33 @@ media screen and (max-width: 768px)
         box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
     }
 
-.btn-register {
-    background: var(--primary-color);
-    border: none;
-    color: blue;
-}
+    .btn-register {
+        background: var(--primary-color);
+        border: none;
+        color: blue;
+    }
 
-.user-email-container {
-    position: relative;
-    display: inline-block;
-}
+    .user-email-container {
+        position: relative;
+        display: inline-block;
+    }
 
-.user-email {
-    cursor: pointer;
-}
+    .user-email {
+        cursor: pointer;
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    top: 20px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    transition: all 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
-}
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        top: 20px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+    }
 
     .dropdown-content a,
     .dropdown-content button {
@@ -281,46 +282,46 @@ media screen and (max-width: 768px)
         text-align: left;
     }
 
-        .dropdown-content a:hover,
-        .dropdown-content button:hover {
-            background-color: #f1f1f1;
-        }
+    .dropdown-content a:hover,
+    .dropdown-content button:hover {
+        background-color: #f1f1f1;
+    }
 
-.user-email-container:hover .dropdown-content,
-.user-email-container:focus-within .dropdown-content {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
+    .user-email-container:hover .dropdown-content,
+    .user-email-container:focus-within .dropdown-content {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-}
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-}
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
 
-.close-modal {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+    .close-modal {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
 
     .close-modal:hover,
     .close-modal:focus {
@@ -329,19 +330,19 @@ media screen and (max-width: 768px)
         cursor: pointer;
     }
 
-.notifications-dropdown,
-.cart-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 50px;
-    width: 300px;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    z-index: 1000;
-}
+    .notifications-dropdown,
+    .cart-dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 50px;
+        width: 300px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        z-index: 1000;
+    }
 
     .notifications-dropdown.active,
     .cart-dropdown.active {
@@ -354,15 +355,15 @@ media screen and (max-width: 768px)
         border-bottom: 1px solid #eee;
     }
 
-        .notifications-dropdown .notification-item:last-child,
-        .cart-dropdown .cart-item:last-child {
-            border-bottom: none;
-        }
+    .notifications-dropdown .notification-item:last-child,
+    .cart-dropdown .cart-item:last-child {
+        border-bottom: none;
+    }
 
-        .notifications-dropdown .notification-item p,
-        .cart-dropdown .cart-item p {
-            margin: 0;
-        }
+    .notifications-dropdown .notification-item p,
+    .cart-dropdown .cart-item p {
+        margin: 0;
+    }
 
     .notifications-dropdown .no-notifications,
     .cart-dropdown .no-cart-items {
@@ -371,56 +372,56 @@ media screen and (max-width: 768px)
         color: #999;
     }
 
-.user-email-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
+    .user-email-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 
-.user-email {
-    font-size: 16px;
-    color: #333;
-}
+    .user-email {
+        font-size: 16px;
+        color: #333;
+    }
 
-.btn-logout {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-}
+    .btn-logout {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #333;
+    }
 
     .btn-logout:hover {
         color: var(--primary-color);
     }
 
-/* 註冊鏈接排版 */
-.login-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    gap: 0.5rem;
-}
+    /* 註冊鏈接排版 */
+    .login-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        gap: 0.5rem;
+    }
 
     .login-footer span {
         font-size: 0.9rem;
         color: var(--light-text);
     }
 
-.btn-register2 {
-    font-size: 0.9rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
+    .btn-register2 {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
 
     .btn-register2:hover {
         color: var(--secondary-color);
     }
 
-.no-account {
-    margin-left:220px;
-
+    .no-account {
+        margin-left: 220px;
+    }
 }

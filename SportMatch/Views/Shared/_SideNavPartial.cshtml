@@ -1,0 +1,21 @@
+@model List<SportMatch.Models.MenuItem>
+
+@{
+    var currentUrl = Context.Request.Path; // 取得當前 URL
+    var menuItems = Model ?? new List<MenuItem>(); // 避免 Model 為 null
+}
+
+<nav class="SideNav">
+    <ul class="nav">
+        @foreach (var item in menuItems)
+        {
+            var isActive = currentUrl == item.Url ? "active" : ""; // 判斷是否為當前頁面
+            <li class="nav-child">
+                <a class="nav-link @isActive" href="@item.Url">
+                    <i class="@item.Icon"></i> @item.Name
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

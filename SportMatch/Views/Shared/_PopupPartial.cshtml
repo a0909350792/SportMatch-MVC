@@ -1,0 +1,77 @@
+@* @model TModel *@
+
+<div class="modal fade" id="userDataModal" tabindex="-1" aria-labelledby="userDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-6" id="userDataModalLabel">基本資料-編輯</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="user-name" class="col-form-label">姓名</label>
+                        <input type="text" class="form-control" id="user-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-gender" class="col-form-label">性別</label>
+                        <select class="form-select" aria-label="請選擇性別" id="user-gender">
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-birthday" class="col-form-label">生日</label>
+                        <input type="date" class="form-control" id="user-birthday">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-password" class="col-form-label">密碼</label>
+                        <input type="password" class="form-control" id="user-password">
+                    </div>
+                    <label for="user-phone" class="col-form-label">手機</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="請輸入欲變更的手機號碼" aria-label="" aria-describedby="button-addon2" id="user-phone">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">傳送驗證碼</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">儲存變更</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                彈窗2
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    div:not(#loginModal) {
+        .modal-content {
+            width: 100%;
+            background: white;
+            border: none;
+            padding: 0;
+            
+            .modal-header {
+                
+                h1 {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+</style>

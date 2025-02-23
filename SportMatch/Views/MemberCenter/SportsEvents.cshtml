@@ -1,0 +1,339 @@
+@model dynamic
+
+@{
+    Layout = "_MemberLayout";
+}
+<div class="tab-wrapper">
+    <ul class="nav nav-underline" role="tablist">
+        <li class="nav-item" aria-selected="true" >
+            <a class="nav-link active" aria-controls="tab1" href="">喜好運動</a>
+        </li>
+        <li class="nav-item"  aria-selected="false" >
+            <a class="nav-link" href="" aria-controls="tab2">即將到來的活動</a>
+        </li>
+        <li class="nav-item" aria-selected="false">
+            <a class="nav-link" href="" aria-controls="tab3">我的隊伍</a>
+        </li>
+        <button class="action btn btn-secondary btn-sm edit_Btn d-flex align-items-center">編輯</button>
+    </ul>
+    <div class="tab-content-container">
+        <div class="tab-content active favSport" id="tab1">
+            <div class="card text-bg-dark border-0">
+                <img src="https://cdn.pixabay.com/photo/2016/11/18/22/10/man-1837119_1280.jpg" class="card-img" alt="...">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">籃球</h5>
+                </div>
+            </div>
+            <div class="card text-bg-dark border-0">
+                <img src="https://cdn.pixabay.com/photo/2021/07/21/20/11/beach-volleyball-6483905_1280.jpg" class="card-img" alt="...">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">排球</h5>
+                </div>
+            </div>
+            <div class="card text-bg-dark border-0">
+                <img src="https://cdn.pixabay.com/photo/2021/02/19/16/36/badminton-6030861_1280.jpg" class="card-img" alt="...">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">羽球</h5>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content onComingEvent" id="tab2">
+            <table class="table table-hover">
+                <thead class="bg-light">
+                <tr>
+                    <th scope="col" class="">比賽名稱</th>
+                    <th scope="col" class="text-center">比賽日期</th>
+                    <th scope="col" class="text-center">比賽地點</th>
+                    <th scope="col" class="text-center">類型</th>
+                    <th scope="col" style="width: 8%">報名狀態</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2025 台中籃球公開賽</td>
+                    <td class="text-center">2025-02-28  13:00</td>
+                    <td  class="text-center">2025 台中籃球公開賽</td>
+                    <td  class="text-center">籃球</td>
+                    <td  class="text-center"><span class="status default">成功</span></td>
+                    <td class="actions">
+                        <button class="btn me-1">詳情</button>
+                        <button class="btn">取消</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2025 台中籃球公開賽</td>
+                    <td class="text-center">2025-02-28  13:00</td>
+                    <td  class="text-center">2025 台中籃球公開賽</td>
+                    <td  class="text-center">羽球</td>
+                    <td  class="text-center"><span class="status cancel">已取消</span></td>
+                    <td class="actions">
+                        <button class="btn me-1">詳情</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-content myTeam" id="tab3">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header d-flex align-items-center-center justify-content-between">
+                        <button class="accordion-button py-2 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <h4 class="blockTitle d-flex justify-content-between m-0 pb-0 border-0">籃球戰神隊<i class="fa-solid fa-caret-down ms-2"></i></h4>
+                        </button>
+                        <button class="btn btn-sm btn-light flex-shrink-0 ms-1 d-none">新增</button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body p-0">
+                            <table class="table border-0">
+                                <thead class="bg-secondary">
+                                <tr>
+                                    <th scope="col">運動類型</th>
+                                    <th scope="col">創立時間</th>
+                                    <th scope="col">成員數量</th>
+                                    <th scope="col">完成賽事</th>
+                                    <th scope="col" class="actions">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>籃球</td>
+                                    <td>2023-05-10 13:12:34</td>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td class="actions">
+                                        <button class="btn btn-sm btn-outline-secondary">詳情</button>
+                                        <button class="btn btn-sm btn-secondary">編輯</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div>
+                                            <table class="w-100 table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>隊員</th>
+                                                    <th>位置</th>
+                                                    <th>加入時間</th>
+                                                    <th class="actions">
+                                                        <button class="btn btn-sm quitGroup_Btn">操作</button>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>夏琳瑞<span class="status leader ms-2"><i class="fa-solid fa-flag me-1"></i>隊長</span></td>
+                                                    <td>前鋒</td>
+                                                    <td>2023-05-10</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">退出</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>王小明</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>陳大文</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header d-flex align-items-center-center justify-content-between">
+                        <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            <h4 class="blockTitle d-flex justify-content-between m-0 pb-0 border-0">台北羽球隊<i class="fa-solid fa-caret-down ms-2"></i></h4>
+                        </button>
+                        <button class="btn btn-light flex-shrink-0 ms-1 d-none">新增</button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                        <div class="accordion-body p-0">
+                            <table class="table border-0">
+                                <thead class="bg-secondary">
+                                <tr>
+                                    <th scope="col">運動類型</th>
+                                    <th scope="col">創立時間</th>
+                                    <th scope="col">成員數量</th>
+                                    <th scope="col">完成賽事</th>
+                                    <th scope="col" class="actions">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>籃球</td>
+                                    <td>2023-05-10 13:12:34</td>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td class="actions">
+                                        <button class="btn btn-sm btn-outline-secondary">詳情</button>
+                                        <button class="btn btn-sm btn-secondary">編輯</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div>
+                                            <table class="w-100 table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>隊員</th>
+                                                    <th>位置</th>
+                                                    <th>加入時間</th>
+                                                    <th class="actions">
+                                                        <button class="btn btn-sm quitGroup_Btn">退出</button>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>夏琳瑞<span class="status leader ms-2"><i class="fa-solid fa-flag me-1"></i>隊長</span></td>
+                                                    <td>前鋒</td>
+                                                    <td>2023-05-10</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">退出</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>王小明</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>陳大文</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header d-flex justify-content-between">
+                        <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <h4 class="blockTitle m-0 pb-0 border-0">超排<i class="fa-solid fa-caret-down ms-2"></i></h4>
+                        </button>
+                        <button class="btn btn-light flex-shrink-0 ms-1 d-none">新增</button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                        <div class="accordion-body p-0">
+                            <table class="table border-0">
+                                <thead class="bg-secondary">
+                                <tr>
+                                    <th scope="col">運動類型</th>
+                                    <th scope="col">創立時間</th>
+                                    <th scope="col">成員數量</th>
+                                    <th scope="col">完成賽事</th>
+                                    <th scope="col" class="actions">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>籃球</td>
+                                    <td>2023-05-10 13:12:34</td>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td class="actions">
+                                        <button class="btn btn-sm btn-outline-secondary">詳情</button>
+                                        <button class="btn btn-sm btn-secondary">編輯</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div>
+                                            <table class="w-100 table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>隊員</th>
+                                                    <th>位置</th>
+                                                    <th>加入時間</th>
+                                                    <th class="actions">
+                                                        <button class="btn btn-sm quitGroup_Btn">退出</button>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>夏琳瑞<span class="status leader ms-2"><i class="fa-solid fa-flag me-1"></i>隊長</span></td>
+                                                    <td>前鋒</td>
+                                                    <td>2023-05-10</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">退出</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>王小明</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>陳大文</td>
+                                                    <td>控球後衛</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>
+                                                        <button class="btn btn-sm">移除</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".nav-item a");
+        const contents = document.querySelectorAll(".tab-content");
+        
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function (e){
+                e.preventDefault();
+                
+                tabs.forEach(t => t.classList.remove("active"));
+                contents.forEach(c => c.classList.remove("active"));
+                
+                this.classList.add("active");
+                const targetId = this.getAttribute("aria-controls");
+                document.getElementById(targetId).classList.add("active");
+            });
+        });
+    });
+</script>

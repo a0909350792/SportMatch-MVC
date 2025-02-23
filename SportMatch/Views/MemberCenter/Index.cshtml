@@ -1,0 +1,61 @@
+@model dynamic
+
+@{
+    Layout = "_MemberLayout";
+}
+<h1 class="greeting fs-5 fw-bold mb-3">歡迎，會員名(jrijgefgjorg)</h1>
+<div class="dashboard-body">
+    <div class="card">
+        <div class="header">
+            <h3>即將到來的活動</h3>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>賽事紀錄-長條圖</h3>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>我的隊伍</h3>
+            <p>最活躍的3組-可進入詳情頁</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>組隊邀請</h3>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>我的互動</h3>
+            <p>
+                加入隊伍數字
+                發送邀請數字
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>購買記錄</h3>
+            <p>
+               最近3筆，連結完整訂單
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h3>最近瀏覽</h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        let dataContainer = document.querySelector(".data-container");
+        dataContainer.classList.add("dashboard");
+    });
+</script>
