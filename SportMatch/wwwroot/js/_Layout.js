@@ -1,20 +1,13 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿// 初始化時不顯示登入浮窗
+document.addEventListener("DOMContentLoaded", function () {
     // 初始化所有功能
     initializeAnimations();
     initializeSliders();
     initializeModals();
-    initializeSearch();
     initializeScrollEffects();
     initializeCarousel();
     initializeVenuesSlider();
-
-    if (localStorage.getItem("showLoginModal") === "true") {
-        document.getElementById("loginModal").classList.add("show");
-        localStorage.removeItem("showLoginModal");
-    }
 });
-
-
 
 // 動畫效果
 function initializeAnimations() {
@@ -51,14 +44,6 @@ function initializeSliders() {
         const nextButton = carousel.querySelector(".next");
         const prevButton = carousel.querySelector(".prev");
         const dotsContainer = carousel.querySelector(".carousel-dots");
-
-        // 創建導航點
-        slides.forEach((_, index) => {
-            const dot = document.createElement("button");
-            dot.classList.add("carousel-dot");
-            if (index === 0) dot.classList.add("active");
-            dotsContainer.appendChild(dot);
-        });
 
         const dots = Array.from(dotsContainer.children);
         let currentSlide = 0;
@@ -98,14 +83,6 @@ function initializeSliders() {
             const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
             updateCarousel(prevIndex);
             resetAutoplay();
-        });
-
-        // 導航點事件
-        dots.forEach((dot, index) => {
-            dot.addEventListener("click", () => {
-                updateCarousel(index);
-                resetAutoplay();
-            });
         });
 
         // 觸控滑動支援
@@ -194,16 +171,6 @@ function initializeModals() {
         });
     }
 }
-window.onload = function () {
-    if (localStorage.getItem("showLoginModal") === "true") {
-        document.getElementById("loginModal").classList.add("show");
-        localStorage.removeItem("showLoginModal"); // 移除標記，避免刷新時再次彈出
-    }
-};
-};
-
-// 搜尋功能
-
 
 // 滾動效果
 function initializeScrollEffects() {
@@ -220,8 +187,6 @@ function initializeScrollEffects() {
             }
         });
     });
-
-    
 }
 
 // 輪播圖功能
@@ -234,14 +199,6 @@ function initializeCarousel() {
     const nextButton = carousel.querySelector(".next");
     const prevButton = carousel.querySelector(".prev");
     const dotsContainer = carousel.querySelector(".carousel-dots");
-
-    // 創建導航點
-    slides.forEach((_, index) => {
-        const dot = document.createElement("button");
-        dot.classList.add("carousel-dot");
-        if (index === 0) dot.classList.add("active");
-        dotsContainer.appendChild(dot);
-    });
 
     const dots = Array.from(dotsContainer.children);
     let currentSlide = 0;
@@ -281,14 +238,6 @@ function initializeCarousel() {
         const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
         updateCarousel(prevIndex);
         resetAutoplay();
-    });
-
-    // 導航點事件
-    dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-            updateCarousel(index);
-            resetAutoplay();
-        });
     });
 
     // 觸控滑動支援
@@ -456,76 +405,37 @@ document.addEventListener("click", function (event) {
         cartDropdown.classList.remove("active");
     }
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const loggedInEmail = localStorage.getItem("loggedInEmail");
-    if (loggedInEmail) {
-        updateUIAfterLogin(loggedInEmail);
-    }
-});
-window.onload = function () {
-    if (localStorage.getItem("showLoginModal") === "true") {
-        document.getElementById("loginModal").classList.add("show");
-        localStorage.removeItem("showLoginModal"); // 移除標記，避免刷新時再次彈出
-    }
-};
-
-document.querySelector('.modal').classList.add('show');
-document.body.classList.add('modal-open');  // 禁用滾動
-document.querySelector('.close-modal').addEventListener('click', function () {
-    document.querySelector('.modal').classList.remove('show');
-    document.body.classList.remove('modal-open');  // 恢復滾動
-});
-
-document.querySelector(".btn-login").addEventListener("click", function () {
-    document.getElementById("loginModal").classList.add("show");
-    disableScroll();
-});
-
-document.querySelector(".close-modal").addEventListener("click", function () {
-    document.getElementById("loginModal").classList.remove("show");
-    enableScroll();
-});
-
-function disableScroll() {
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.width = "100%";
+// 檢查用戶是否登入
+function isLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
 }
 
-function enableScroll() {
-    document.body.style.overflow = "auto";
-    document.body.style.position = "";
-    document.body.style.width = "";
+// 用戶未登入時，詢問是否要登入
+function promptLogin(event) {
+    event.preventDefault(); // 防止跳轉
+
+    if (!isLoggedIn()) {
+        let confirmLogin = confirm("您尚未登入，是否要立即登入？");
+        if (confirmLogin) {
+            openLoginModal(); // 打開登入模態框（假設已經有這個函式）
+        }
+    } else {
+        // 如果已登入，正常跳轉
+        window.location.href = event.target.href;
+    }
 }
 
+// 為「配對系統」和「賽事資訊」添加事件監聽器
+document.getElementById("matchingLink").addEventListener("click", promptLogin);
+document.getElementById("eventsLink").addEventListener("click", promptLogin);
+
+
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.querySelector(".modal");
-    const openModalBtns = document.querySelectorAll(".open-modal");
-    const closeModalBtns = document.querySelectorAll(".close-modal");
+    const modal = document.getElementById("loginModal");
 
-    openModalBtns.forEach(btn => {
-        btn.addEventListener("click", function () {
-            modal.classList.add("show");
-            document.documentElement.classList.add("modal-open"); // 避免滾動
-            document.body.classList.add("modal-open"); // 避免滾動
-        });
-    });
-
-    closeModalBtns.forEach(btn => {
-        btn.addEventListener("click", function () {
-            modal.classList.remove("show");
-            document.documentElement.classList.remove("modal-open"); // 恢復滾動
-            document.body.classList.remove("modal-open"); // 恢復滾動
-        });
-    });
-
-    // 點擊 modal 外部關閉
-    window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-            modal.classList.remove("show");
-            document.documentElement.classList.remove("modal-open");
-            document.body.classList.remove("modal-open");
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModal();
         }
     });
 });

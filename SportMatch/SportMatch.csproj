@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\forgotpassword.js~RF6281af8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Index\reset.css" />
     <None Include="wwwroot\js\_Layout.js" />
   </ItemGroup>

@@ -28,8 +28,8 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="#home">首頁</a></li>
-                <li><a href="#matching">配對系統</a></li>
-                <li><a href="#events">賽事資訊</a></li>
+                <li><a href="#matching" id="matchingLink">配對系統</a></li>
+                <li><a href="#events" id="eventsLink">賽事資訊</a></li>
                 <li><a href="#venues">場地資訊</a></li>
                 <li><a href="#shop">運動商城</a></li>
             </ul>
@@ -117,7 +117,7 @@
                     <i class="fas fa-running"></i> 開始運動
                 </button>
                 <div class="form-footer">
-                    <a href="@Url.Action("Forgotpassword", "Account")"><i class="fas fa-key"></i> 忘記密碼？</a>
+                    <a href="@Url.Action("ForgotPassword", "Account")"><i class="fas fa-key"></i> 忘記密碼？</a>
                      <a href="@Url.Action("Register", "Account")"><i class="fas fa-user-plus"></i> 加入會員</a>
                 </div>
             </form>

@@ -1,6 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     // 初始化所有功能
-    initializeNavigation();
     initializeAnimations();
     initializeSliders();
     initializeModals();
@@ -15,38 +14,6 @@
     }
 });
 
-// 導航欄功能
-function initializeNavigation() {
-    const header = document.querySelector(".main-header");
-    let lastScroll = 0;
-
-    // 滾動時改變導航欄樣式
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll <= 0) {
-            header.classList.remove("scroll-up");
-            return;
-        }
-
-        if (
-            currentScroll > lastScroll &&
-            !header.classList.contains("scroll-down")
-        ) {
-            // 向下滾動
-            header.classList.remove("scroll-up");
-            header.classList.add("scroll-down");
-        } else if (
-            currentScroll < lastScroll &&
-            header.classList.contains("scroll-down")
-        ) {
-            // 向上滾動
-            header.classList.remove("scroll-down");
-            header.classList.add("scroll-up");
-        }
-        lastScroll = currentScroll;
-    });
-}
 
 // 動畫效果
 function initializeAnimations() {

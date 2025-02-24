@@ -152,8 +152,8 @@ const passwordInput = document.getElementById("password");
 togglePassword.addEventListener("click", function () {
     const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
     passwordInput.setAttribute("type", type);
-    this.querySelector("i").classList.toggle("fa-eye");
-    this.querySelector("i").classList.toggle("fa-eye-slash");
+    this.querySelector("i").classList.toggle("lock-closed");
+    this.querySelector("i").classList.toggle("lock-open-ooutline");
 });
 
 // 自動填充帳號
@@ -167,4 +167,50 @@ if (savedEmail) {
 const loggedInEmail = localStorage.getItem("loggedInEmail");
 if (loggedInEmail) {
     updateUIAfterLogin(loggedInEmail);
+}
+
+function checkLogin(targetUrl) {
+    // 從 localStorage 檢查是否登入（這需要在登入時設定）
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (isLoggedIn) {
+        window.location.href = targetUrl; // 已登入，正常跳轉
+    } else {
+        let confirmLogin = confirm("您尚未登入，是否要立即登入？");
+        if (confirmLogin) {
+            openLoginModal(); // 打開登入視窗
+        }
+    }
+}
+
+
+// 簡單的登入狀態檢查（這裡可以改成從後端 API 取得真實的登入狀態）
+function getLoginStatus() {
+    return localStorage.getItem("isLoggedIn") === "true";
+}
+function checkLogin(event, url) {
+    event.preventDefault(); // 防止連結直接跳轉
+
+    let isLoggedIn = getLoginStatus(); // 假設這個函式會返回 true 或 false
+
+    if (isLoggedIn) {
+        window.location.href = url; // 若已登入則正常跳轉
+    } else {
+        let confirmLogin = confirm("您尚未登入，是否要立即登入？");
+        if (confirmLogin) {
+            openLoginModal(); // 呼叫開啟登入視窗的函式
+        }
+    }
+}
+
+// 簡單的登入狀態檢查（這裡可以改成從後端 API 取得真實的登入狀態）
+function getLoginStatus() {
+    return localStorage.getItem("isLoggedIn") === "true";
+}
+function handleLoginSuccess() {
+    localStorage.setItem("isLoggedIn", "true");
+}
+function handleLogout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.reload();
 }
