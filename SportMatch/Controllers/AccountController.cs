@@ -54,10 +54,11 @@ namespace SportMatch.Controllers
             // 生成一個臨時密碼
             string tempPassword = GenerateTempPassword();
 
-            // 更新使用者的密碼
-            existingUser.Password = tempPassword; // **應該加密密碼，這裡簡化處理**
+            // ✅ 加密臨時密碼並存入資料庫
+            existingUser.Password = BCrypt.Net.BCrypt.HashPassword(tempPassword);
             _context.SaveChanges();
 
+            
             // 這裡可以選擇發送電子郵件
             bool isSent = SendEmail(model.Email, "您的驗證碼", $"您的驗證碼是：{tempPassword},請盡快修改密碼");
 
@@ -88,35 +89,40 @@ namespace SportMatch.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                bool loginSuccess = ValidateUser(model.Email, model.Password);
-
-                if (loginSuccess)
-                {
-                    return Ok(new { success = true, message = "登入成功" });
-                }
-                else
-                {
-                    return BadRequest(new { success = false, message = "帳號或密碼錯誤" });
-                }
+                return BadRequest(new { success = false, message = "登入資料不正確" });
             }
 
-            return BadRequest(new { success = false, message = "登入資料不正確" });
+            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
+                return BadRequest(new { success = false, message = "帳號或密碼錯誤" });
+            }
+
+            return Ok(new { success = true, message = "登入成功" });
         }
 
-          // 驗證用戶帳號與密碼
+
+
+
+
+        // 驗證用戶帳號與密碼
         private bool ValidateUser(string email, string password)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
+
             if (user == null)
             {
-                return false; // 如果找不到該用戶，返回 false
+                return false; // 用戶不存在，直接返回 false
             }
 
-            // 比對密碼（這裡沒有加密邏輯，您可以添加加密邏輯來保護密碼）
-            return user.Password == password; // 您應該使用加密來比較密碼
+            // 使用 BCrypt 驗證密碼
+            return BCrypt.Net.BCrypt.Verify(password, user.Password);
         }
+
+
 
 
         // 註冊發送驗證碼接口
@@ -190,7 +196,7 @@ namespace SportMatch.Controllers
                 }
 
                 // 密碼加密（這裡使用的是簡單示範，實際應使用加密算法，如 BCrypt 或 ASP.NET Identity）
-                var hashedPassword = model.Password; // TODO: 請替換成加密邏輯
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
                 // 創建新用戶
                 var user = new User
