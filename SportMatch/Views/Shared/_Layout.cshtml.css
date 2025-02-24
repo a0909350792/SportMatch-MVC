@@ -35,12 +35,17 @@ body {
     line-height: var(--line-height);
     color: var(--text-color);
     background-color: var(--background);
+    background-image: url('~/image/icon.jpg');
+    background-size: cover;
+    position: relative;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    background-image: url("~/image/icon.jpg");
+    background-size: cover;
 }
 
 /* 導航欄樣式 */

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\Index\reset.css" />
+    <None Include="wwwroot\js\MatchPage.js" />
     <None Include="wwwroot\js\_Layout.js" />
   </ItemGroup>
 
