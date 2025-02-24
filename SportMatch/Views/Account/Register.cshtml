@@ -5,7 +5,7 @@
 @{
     Layout = null;
 }
-
+@model SportMatch.Models.RegisterModel
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -18,8 +18,12 @@
     <div class="register-container">
         <div class="register-card">
             <h1 class="register-title">會員註冊</h1>
-            <form class="register-form" id="registerForm">
+            <form class="register-form" id="registerForm" action="/Account/Register" method="POST">
                 <div class="form-group">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <div class="error-message">@error.ErrorMessage</div>
+                    }
                     <label for="username">用戶名</label>
                     <input type="text"
                            id="username"
@@ -73,7 +77,7 @@
     </div>
     <script src="~/js/register.js" defer></script>
     <script>
-       
+
                 function redirectToHome() {
             localStorage.setItem("showLoginModal", "true"); // 設定標記
             window.location.href = "/"; // 導向首頁

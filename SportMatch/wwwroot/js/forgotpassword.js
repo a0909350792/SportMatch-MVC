@@ -1,22 +1,27 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('forgotPasswordForm');
-    const usernameEmailInput = document.getElementById('username-email');
-    const messageDiv = document.getElementById('message');
+﻿document.getElementById("sendTempPasswordButton").addEventListener("click", function () {
+    var email = document.getElementById("email").value;
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();  // 防止表單提交
-
-        const usernameOrEmail = usernameEmailInput.value.trim();
-
-        if (!usernameOrEmail) {
-            messageDiv.textContent = '請輸入帳號或電子郵件';
-            messageDiv.style.color = '#dc3545'; // 顯示錯誤訊息 (紅色)
-            return;
-        }
-
-        // 顯示發送成功訊息
-        messageDiv.textContent = '我們已經發送了重設密碼的鏈接至您的電子郵件。';
-        messageDiv.style.color = '#28a745';  // 顯示成功訊息 (綠色)
-        usernameEmailInput.value = ''; // 清空輸入框
-    });
+    if (email) {
+        // 發送請求到後端 API 來處理生成臨時密碼
+        fetch('/ForgotPassword/SendTempPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(result => {
+                if (result.status === 200) {
+                    document.getElementById("tempPassword").innerText = "您的臨時密碼是: " + result.body.tempPassword;
+                } else {
+                    document.getElementById("tempPassword").innerText = result.body.message || "發生錯誤，請稍後再試。";
+                }
+            })
+            .catch(error => {
+                document.getElementById("tempPassword").innerText = "發生錯誤，請稍後再試。";
+                console.error("Request failed: ", error);
+            });
+    }
 });
+

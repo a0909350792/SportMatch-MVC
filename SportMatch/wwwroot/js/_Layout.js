@@ -1,52 +1,13 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿// 初始化時不顯示登入浮窗
+document.addEventListener("DOMContentLoaded", function () {
     // 初始化所有功能
-    initializeNavigation();
     initializeAnimations();
     initializeSliders();
     initializeModals();
-    initializeSearch();
     initializeScrollEffects();
     initializeCarousel();
     initializeVenuesSlider();
-
-    if (localStorage.getItem("showLoginModal") === "true") {
-        document.getElementById("loginModal").classList.add("show");
-        localStorage.removeItem("showLoginModal");
-    }
 });
-
-// 導航欄功能
-function initializeNavigation() {
-    const header = document.querySelector(".main-header");
-    let lastScroll = 0;
-
-    // 滾動時改變導航欄樣式
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.scrollY;
-
-        if (currentScroll <= 0) {
-            header.classList.remove("scroll-up");
-            return;
-        }
-
-        if (
-            currentScroll > lastScroll &&
-            !header.classList.contains("scroll-down")
-        ) {
-            // 向下滾動
-            header.classList.remove("scroll-up");
-            header.classList.add("scroll-down");
-        } else if (
-            currentScroll < lastScroll &&
-            header.classList.contains("scroll-down")
-        ) {
-            // 向上滾動
-            header.classList.remove("scroll-down");
-            header.classList.add("scroll-up");
-        }
-        lastScroll = currentScroll;
-    });
-}
 
 // 動畫效果
 function initializeAnimations() {
@@ -83,14 +44,6 @@ function initializeSliders() {
         const nextButton = carousel.querySelector(".next");
         const prevButton = carousel.querySelector(".prev");
         const dotsContainer = carousel.querySelector(".carousel-dots");
-
-        // 創建導航點
-        slides.forEach((_, index) => {
-            const dot = document.createElement("button");
-            dot.classList.add("carousel-dot");
-            if (index === 0) dot.classList.add("active");
-            dotsContainer.appendChild(dot);
-        });
 
         const dots = Array.from(dotsContainer.children);
         let currentSlide = 0;
@@ -130,14 +83,6 @@ function initializeSliders() {
             const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
             updateCarousel(prevIndex);
             resetAutoplay();
-        });
-
-        // 導航點事件
-        dots.forEach((dot, index) => {
-            dot.addEventListener("click", () => {
-                updateCarousel(index);
-                resetAutoplay();
-            });
         });
 
         // 觸控滑動支援
@@ -205,41 +150,24 @@ function initializeSliders() {
 function initializeModals() {
     const loginBtn = document.querySelector(".btn-login");
     const modal = document.getElementById("loginModal");
+    const closeModal = document.querySelector(".close-modal");
 
     if (loginBtn && modal) {
         loginBtn.addEventListener("click", () => {
-            modal.style.display = "flex";
-            document.body.style.overflow = "hidden";
+            modal.classList.add("show");
+            document.body.classList.add("modal-open"); // 禁用頁面滾動
         });
 
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
-            }
+        closeModal.addEventListener("click", () => {
+            modal.classList.remove("show");
+            document.body.classList.remove("modal-open"); // 允許滾動
         });
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && modal.style.display === "flex") {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
+            if (e.key === "Escape" && modal.classList.contains("show")) {
+                modal.classList.remove("show");
+                document.body.classList.remove("modal-open");
             }
-        });
-    }
-}
-
-// 搜尋功能
-function initializeSearch() {
-    const searchInput = document.querySelector(".search-bar input");
-    let searchTimeout;
-
-    if (searchInput) {
-        searchInput.addEventListener("input", (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                // 這裡添加搜尋邏輯
-                console.log("搜尋:", e.target.value);
-            }, 500);
         });
     }
 }
@@ -259,28 +187,6 @@ function initializeScrollEffects() {
             }
         });
     });
-
-    // 返回頂部按鈕
-    const backToTop = document.createElement("button");
-    backToTop.innerHTML = "↑";
-    backToTop.className = "back-to-top";
-    backToTop.style.display = "none";
-    document.body.appendChild(backToTop);
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            backToTop.style.display = "block";
-        } else {
-            backToTop.style.display = "none";
-        }
-    });
-
-    backToTop.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    });
 }
 
 // 輪播圖功能
@@ -293,14 +199,6 @@ function initializeCarousel() {
     const nextButton = carousel.querySelector(".next");
     const prevButton = carousel.querySelector(".prev");
     const dotsContainer = carousel.querySelector(".carousel-dots");
-
-    // 創建導航點
-    slides.forEach((_, index) => {
-        const dot = document.createElement("button");
-        dot.classList.add("carousel-dot");
-        if (index === 0) dot.classList.add("active");
-        dotsContainer.appendChild(dot);
-    });
 
     const dots = Array.from(dotsContainer.children);
     let currentSlide = 0;
@@ -340,14 +238,6 @@ function initializeCarousel() {
         const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
         updateCarousel(prevIndex);
         resetAutoplay();
-    });
-
-    // 導航點事件
-    dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-            updateCarousel(index);
-            resetAutoplay();
-        });
     });
 
     // 觸控滑動支援
@@ -515,17 +405,37 @@ document.addEventListener("click", function (event) {
         cartDropdown.classList.remove("active");
     }
 });
+// 檢查用戶是否登入
+function isLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+}
+
+// 用戶未登入時，詢問是否要登入
+function promptLogin(event) {
+    event.preventDefault(); // 防止跳轉
+
+    if (!isLoggedIn()) {
+        let confirmLogin = confirm("您尚未登入，是否要立即登入？");
+        if (confirmLogin) {
+            openLoginModal(); // 打開登入模態框（假設已經有這個函式）
+        }
+    } else {
+        // 如果已登入，正常跳轉
+        window.location.href = event.target.href;
+    }
+}
+
+// 為「配對系統」和「賽事資訊」添加事件監聽器
+document.getElementById("matchingLink").addEventListener("click", promptLogin);
+document.getElementById("eventsLink").addEventListener("click", promptLogin);
+
 
 document.addEventListener("DOMContentLoaded", function () {
-    const loggedInEmail = localStorage.getItem("loggedInEmail");
-    if (loggedInEmail) {
-        updateUIAfterLogin(loggedInEmail);
-    }
-});
-window.onload = function () {
-    if (localStorage.getItem("showLoginModal") === "true") {
-        document.getElementById("loginModal").classList.add("show");
-        localStorage.removeItem("showLoginModal"); // 移除標記，避免刷新時再次彈出
-    }
-};
+    const modal = document.getElementById("loginModal");
 
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+});
