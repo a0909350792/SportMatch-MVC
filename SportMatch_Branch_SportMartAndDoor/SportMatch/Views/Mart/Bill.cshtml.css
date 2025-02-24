@@ -1,0 +1,26 @@
+﻿.OrderFrame {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.OrderSection {
+    background-color: #e9ecef;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.OrderItem {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.OrderButton {
+    right: 20px;
+    bottom: 20px;
+}
+
+.ScrollableList {
+    max-height: 200px;
+    overflow-y: auto;
+}

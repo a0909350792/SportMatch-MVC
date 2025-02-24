@@ -1,0 +1,22 @@
+﻿.CartBody {
+    background-color: #f8f9fa;
+    height: 770px;
+    max-width: 50%;
+}
+
+.CartScrollable {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.CartItem {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.Logistics {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+}

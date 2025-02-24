@@ -1,0 +1,174 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@section Scripts {
+        <script src="~/Views/Mart/Mart.cshtml.js" asp-append-version="true"></script>
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+<!-- 彈出視窗 -->
+<div class="modal fade" id="ProductModal" tabindex="-1">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="ProductModalLabel">商品詳情</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body d-flex">
+        <!-- 左側商品圖片 -->
+        <div class="ModalLeftField d-flex align-items-center">
+            <img src="\image\icon.jpg" alt="商品圖片 class="img-fluid">
+        </div>
+
+        <!-- 右側資訊欄 -->
+        <div class="ModalRightField w-100">
+        <div class="d-flex">
+          <h3 class="mb-3 d-flex">這裡是名稱</h3>
+          <!-- 我的最愛 -->
+          <button class="btn mb-4 ms-auto fs-5" onclick="HeartIconChange()">
+              <i class="bi bi-heart" id="ModalHeartIcon"></i>
+          </button>
+          <div class="modal fade HeartModal" id="HeartModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="HeartModalMessage">已加入我的最愛</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+          <p><strong>商品價格:</strong> 這裡是價格</p>
+          <p><strong>商品是否有貨:</strong> 
+            <button class="btn btn-success" disabled>有貨</button>
+          </p>
+          <p><strong>商品詳細資訊:</strong> 這裡顯示詳細資訊</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer d-flex">
+        <!-- 左側: 三張圖片 -->
+        <div class="ModalFooterImages d-flex">
+          <img src="\image\icon1.jpg" alt="商品圖片1" />
+          <img src="\image\icon1.jpg" alt="商品圖片2" />
+          <img src="\image\icon1.jpg" alt="商品圖片3" />
+        </div>
+        <!-- 右側: 加入購物車按鈕 -->
+        <button class="btn btn-primary ms-auto">加入購物車</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 主頁面 -->
+<div class="row">
+    <!-- 左側欄位 -->
+    <div class="BodyLiftField col-2 d-flex flex-column">
+        <h5>篩選條件</h5>
+        <form>
+            <div class="accordion" id="FilterAccordion">      
+                <div class="accordion-item">
+                    <h5 class="p-2 accordion-header">                                    
+                        <input type="radio" name="ParentCategory" id="ParentCategoryRadio0" data-bs-toggle="collapse" data-bs-target="#Collapse0" /><label class="px-3" for="ParentCategoryRadio0">全部</label>
+                    </h5>
+                    <div id="Collapse0" class="accordion-collapse collapse" data-bs-parent="#FilterAccordion"></div>
+                </div>
+
+                <!-- 父分類 1 -->
+                @foreach (var item in ViewBag.ForCategory)
+                {
+                    <div class="accordion-item">
+                        <h5 class="p-2 accordion-header">                                    
+                            <input type="radio" name="ParentCategory" id="ParentCategoryRadio-@item.CategoryID" data-bs-toggle="collapse" data-bs-target="#Collapse-@item.CategoryID" />
+                            <label class="px-3" for="ParentCategoryRadio-@item.CategoryID">@item.ParentCategory</label>
+                        </h5>
+                            <div id="Collapse-@item.CategoryID" class="accordion-collapse collapse" data-bs-parent="#FilterAccordion">
+                            <div class="accordion-body">                            
+                                <input type="checkbox" id="@item.ChildCategoryID1" class="ChildCategoryCheckbox" /><label for="@item.ChildCategoryID1">@item.ChildCategory1</label><br />
+                                <input type="checkbox" id="@item.ChildCategoryID2" class="ChildCategoryCheckbox" /><label for="@item.ChildCategoryID2">@item.ChildCategory2</label>
+                            </div>
+                        </div>
+                    </div>
+                }
+            <!-- 後續用迴圈加分類 -->
+            </div>
+
+        </form>
+        <!-- 側廣告 -->
+        <div class="mt-auto">
+            <a href="#"><img src="\image\iconSide.jpg" alt="主廣告" class="img-fluid" /></a>
+        </div>
+    </div>
+
+
+    <!-- 商品欄位 -->
+    <div class="col-10 right-sidebar">
+        <!-- 主廣告 -->
+        <div class="mb-3">
+            <a href="#"><img src="\image\iconLong.jpg" alt="主廣告" class="img-fluid" /></a>
+        </div>
+        <!-- 換頁欄 -->
+        <div class="d-flex justify-content-between mb-3">
+            <nav>
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <span>&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            <div>
+                <select class="form-select">
+                    <option value="low-to-high">價格從低到高</option>
+                    <option value="high-to-low">價格從高到低</option>
+                </select>
+            </div>
+        </div>
+        <!-- 商品列表 -->
+        <div class="row">
+            <!-- 商品1 -->
+            @foreach (var item in ViewBag.ForProducts)
+            {
+                <div class="col-12 col-md-5 col-lg-3 mb-3">
+                    <div class="card">
+                        <img src="@item.Image" class="card-img-top" alt="@item.Name" data-bs-toggle="modal" data-bs-target="#ProductModal">
+                        <div class="w-80 card-body">
+                            <h5 class="card-title" data-bs-toggle="modal" data-bs-target="#ProductModal">@item.Name</h5>
+                            <div class="CardButton d-flex">
+                                <div class="d-flex">
+                                    @if (item.Discount < 0)
+                                    {
+                                       <button class="btn btn-danger">@item.Discount %</button>
+                                    }
+                                   <button class="btn btn-success">@item.Price</button>                            
+                                </div>
+                                <button class="btn btn-primary ms-auto" style="font-size: 13x;"><i class="bi bi-cart4"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        <!-- 後續用迴圈加商品 -->
+        </div>
+    </div>
+</div>
+

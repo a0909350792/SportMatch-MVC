@@ -1,0 +1,45 @@
+﻿.ModalRightField {
+    padding: 20px;
+}
+
+.ModalLeftField {
+    max-width: 40%;
+    height: auto;
+}
+
+    .ModalLeftField img {
+        max-width: 100%;
+        height: auto;
+    }
+
+.ModalFooterImages {
+    max-width: 13%
+}
+
+    .ModalFooterImages img {
+        width: 100%;
+        margin-right: 5px;
+    }
+
+.bi-heart-fill {
+    color: #FF007F;
+}
+
+.HeartModal .modal-content {
+    background-color: #000000;
+    !important
+}
+
+.HeartModal .modal-header {
+    border-bottom: none;
+    !important
+}
+
+.HeartModal .modal-title {
+    color: #ffffff;
+    !important
+}
+
+.BodyLiftField {
+    height: 90vh;
+}
