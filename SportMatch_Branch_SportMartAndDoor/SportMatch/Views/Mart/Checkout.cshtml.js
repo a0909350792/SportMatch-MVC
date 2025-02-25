@@ -59,9 +59,80 @@
             Elements.HomeDeliveryPickup.checked =
             Elements.FamilyMartPickup.disabled =
             Elements.FamilyMartStoreBtn.disabled =
-            false;
-
+            false;        
         Elements.FamilyMartPickup.checked =
             true;
     }
 }
+
+
+
+// 購物車localstorage接收資料用
+function LoadCart() {
+
+    const Cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    const CartContainer = document.getElementById("CartItem");
+    console.log(Cart);
+
+    // 如果購物車是空的
+    if (Cart.length === 0) {
+        CartContainer.innerHTML = "<p>購物車是空的</p>";
+        return;
+    }
+    else {
+        CartContainer.innerHTML = "";
+        // 顯示每個商品
+        Cart.forEach(Item => {
+            const ItemElement = document.createElement('div');
+            ItemElement.classList.add('card', 'CartItem');
+            ItemElement.innerHTML =
+                `
+             <div class="card CartItem">
+                 <div class="row">
+                     <div class="col-3 d-flex align-items-center">
+                         <img src="${Item.Image}" class="img-fluid mx-3" alt="商品圖片">
+                     </div>
+                     <div class="col-9">
+                         <div class="card-body">
+                             <h5 class="card-title mb-3">${Item.Name}</h5>
+                             ${Item.Discount < 0 ? `<p><strong>折扣:&nbsp;</strong>&nbsp;${Item.Discount}&nbsp;%</p>` : ''}
+                             <p><strong>價格:&nbsp;&nbsp;</strong>${Item.Price}</p>
+                             <div class="d-flex">
+                                 <div class="d-flex">
+                                     <button class="btn btn-light" onclick="updateQuantity('${Item.ID}', -1)">-</button>
+                                     <div class="col-9 mt-2 text-center">${Item.Quantity}</div>
+                                     <button class="btn btn-light" onclick="updateQuantity('${Item.ID}', 1)">+</button>
+                                 </div>
+                                 <button class="btn btn-danger btn-sm ms-auto" onclick="removeItem('${Item.ID}')">刪除</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+            `;
+            CartContainer.appendChild(ItemElement);
+        });
+    }
+}
+// 更新購物車商品數量
+function updateQuantity(ItemID, Delta) {
+    let Cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    const Item = Cart.find(Item => Item.ID === ItemID);
+    if (Item) {
+        Item.Quantity = Math.max(1, Item.Quantity + Delta);
+        localStorage.setItem("Cart", JSON.stringify(Cart));
+        LoadCart();
+    }
+}
+
+// 刪除購物車中的商品
+function removeItem(ItemID) {
+    let Cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    Cart = Cart.filter(Item => Item.ID !== ItemID);
+    localStorage.setItem("Cart", JSON.stringify(Cart));
+    LoadCart();
+}
+
+// 頁面載入時顯示購物車
+document.addEventListener('DOMContentLoaded', LoadCart);
+

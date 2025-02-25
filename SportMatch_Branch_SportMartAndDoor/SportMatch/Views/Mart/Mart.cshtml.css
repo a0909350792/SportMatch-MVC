@@ -13,12 +13,16 @@
     }
 
 .ModalFooterImages {
-    max-width: 13%
+    margin: -10% 0 -10% 0;
+    width: 40%;
+    height: 100%;
 }
 
     .ModalFooterImages img {
-        width: 100%;
-        margin-right: 5px;
+        height: 100%;
+        width: 30%;
+        margin-right: 10px;
+        object-fit: cover
     }
 
 .bi-heart-fill {
@@ -27,19 +31,61 @@
 
 .HeartModal .modal-content {
     background-color: #000000;
-    !important
 }
 
 .HeartModal .modal-header {
     border-bottom: none;
-    !important
 }
 
 .HeartModal .modal-title {
     color: #ffffff;
-    !important
 }
 
 .BodyLiftField {
     height: 90vh;
+}
+
+#ModelFooterProductImage01:active {
+    content: url('\image\icon.jpg');
+}
+
+#ModelFooterProductImage02:active {
+    content: url('\image\icon1.jpg');
+}
+
+/*以下修正配色*/
+.MartContainer {
+    background-color: #000000
+}
+
+.DiscountBtnClass {
+    background-color: #ff0000;
+    color: #ffffff
+}
+
+.PriceBtnClass {
+    background-color: #ff5f00;
+    color: #ffffff
+}
+
+.CartBtnClass {
+    background-color: #ff5f00;
+    color: #ffffff;
+}
+
+.BootstrapItemClass {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #ff5f00;
+}
+
+.BootstrapChildItemClass {
+    background-color: #ff5f00;
+    color: #ffffff;
+    border: 1px solid #ff5f00;
+}
+
+.BootstrapItemClass.page {
+    background-color: #000000;
+    color: #ffffff;
 }

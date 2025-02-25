@@ -15,7 +15,7 @@ body {
 .DoorContainer {
     height: 100vh;
     transform: translate(0, 0);
-    overflow: hidden;    
+    overflow: hidden;
 }
 
 .Image img {
@@ -50,10 +50,11 @@ body {
 .BadmintonLogo,
 .BasketballLogo,
 .VolleyballLogo {
-    z-index: 4;
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 0.1s ease-in-out;
+    z-index: 5;
+    clip-path: polygon(100% 0%, 50% 0%, 50% 0%, 100% 0%);
+    transition: clip-path 0.1s ease-in-out, filter 0.5s ease-out, opacity 0.2s ease-in;
     height: 100%;
+    background-color: transparent;
 }
 
 .BadmintonLogo {
@@ -74,7 +75,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-
 .BadmintonLogo:hover {
     content: url('/image/DoorImage/BadmintonLogo02.png');
 }
@@ -86,7 +86,6 @@ body {
 .VolleyballLogo:hover {
     content: url('/image/DoorImage/VolleyballLogo02.png');
 }
-
 
 .BadmintonLogo:active {
     content: url('/image/DoorImage/BadmintonLogo03.png');
@@ -102,10 +101,39 @@ body {
 
 .ChooseText {
     display: inline;
-    z-index: 5;
+    z-index: 6;
     position: fixed;
     right: 10px;
     bottom: 10px;
-    font-size: 24px;
+    font-size: 48px;
     visibility: hidden;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 0px #fff, 0 0 5px #fff;
+}
+
+.BadmintonLogoBackground,
+.BasketballLogoBackground,
+.VolleyballLogoBackground {
+    z-index: 4;
+    clip-path: polygon(100% 0%, 50% 0%, 50% 0%, 100% 0%);
+    transition: clip-path 0.1s ease-in-out;
+    height: 100%;
+    background-size: contain;
+}
+
+.BadmintonLogoBackground {
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.BasketballLogoBackground {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.VolleyballLogoBackground {
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
 }

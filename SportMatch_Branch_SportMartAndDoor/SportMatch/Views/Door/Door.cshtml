@@ -10,10 +10,16 @@
     <div class="Image">
         <img class="TopMask" src="/image/DoorImage/TopMask.png">
         <img class="BottomMask" src="/image/DoorImage/BottomMask.png">
-        <img class="DoorBackground" src="/image/DoorImage/DoorBackground.jpg">
-        <a href="#"><img class="BadmintonLogo" src="/image/DoorImage/BadmintonLogo01.png"></a>
-        <a href="#"><img class="BasketballLogo" src="/image/DoorImage/BasketballLogo01.png"></a>
-        <a href="#"><img class="VolleyballLogo" src="/image/DoorImage/VolleyballLogo01.png"></a>
+        <img class="DoorBackground" src="/image/DoorImage/DoorBackground.jpg">   
+        @foreach (var item in ViewBag.ForSport)
+        {
+                <a href="javascript:void(0);" onclick="HomeLinkDelay('@Url.Action("Mart", "Mart", new { Sport = item.Ball })')">
+                    <img class=@($"{item.Ball}Logo") id=@($"{item.Ball}Logo") src = "@Url.Content($"/image/DoorImage/{item.Ball}Logo01.png")"/>
+                </a>
+        }        
+        <img class="BadmintonLogoBackground" src="/image/DoorImage/BadmintonLogo03.png">
+        <img class="BasketballLogoBackground" src="/image/DoorImage/BasketballLogo03.png">
+        <img class="VolleyballLogoBackground" src="/image/DoorImage/VolleyballLogo03.png">
         <div id="ChooseText" class="ChooseText">請選擇球種</div>
     </div>
 </div>

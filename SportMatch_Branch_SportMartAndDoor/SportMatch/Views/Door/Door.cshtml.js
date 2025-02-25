@@ -1,16 +1,22 @@
-﻿window.onload = function () {
-    var TopMask = document.querySelector('.TopMask');
-    var BottomMask = document.querySelector('.BottomMask');
-    var DoorBackground = document.querySelector('.DoorBackground');
+﻿var TopMask = document.querySelector(".TopMask");
+var BottomMask = document.querySelector(".BottomMask");
+var DoorBackground = document.querySelector(".DoorBackground");
 
-    var logos = [
-        document.querySelector('.BadmintonLogo'),
-        document.querySelector('.BasketballLogo'),
-        document.querySelector('.VolleyballLogo')
-    ];
+var Logos = [
+    document.querySelector(".BadmintonLogo"),
+    document.querySelector(".BasketballLogo"),
+    document.querySelector(".VolleyballLogo")
+];
 
-    var ChooseText = document.getElementById('ChooseText');
+var LogosBG = [
+    document.querySelector(".BadmintonLogoBackground"),
+    document.querySelector(".BasketballLogoBackground"),
+    document.querySelector(".VolleyballLogoBackground")
+];
 
+var ChooseText = document.getElementById("ChooseText");
+
+window.onload = function () {
     // 1: 圖片1下拉
     setTimeout(function () {
         BottomMask.style.transform = "translate(0, 30vh)";
@@ -34,9 +40,12 @@
     }, 2500);
 
     // 4: 圖片4、5、6顯示
-    for (let i = 0; i < logos.length; i++) {
+    for (let i = 0; i < Logos.length; i++) {
         setTimeout(function () {
-            logos[i].style.clipPath = "inset(0 0 0 0)";
+            Logos[i].style.clipPath = "polygon(100% 0%, 50% 0%, 0% 100%, 50% 100%)";
+        }, 4000 + (i * 300));
+        setTimeout(function () {
+            LogosBG[i].style.clipPath = "polygon(100% 0%, 50% 0%, 0% 100%, 50% 100%)";
         }, 4000 + (i * 300));
     }
 
@@ -44,4 +53,23 @@
     setTimeout(function () {
         ChooseText.style.visibility = "visible";
     }, 5500);
+
+    Logos.forEach(function (item) {
+        item.addEventListener("click", function () {
+            this.style.pointerEvents = "none";
+            this.style.clipPath = "none"
+            this.style.transform = "clip-path 0s";
+            this.src = `/image/DoorImage/${this.id}03.png`;
+            this.style.transform = "translate(-50%, -50%) scale(1.1)";
+            this.style.filter = "blur(150px)";
+            this.style.opacity = "0";
+        });
+    });
 };
+
+// 延遲跳轉時間
+function HomeLinkDelay(url) {
+    setTimeout(function () {
+        window.location.href = url;
+    }, 100);
+}

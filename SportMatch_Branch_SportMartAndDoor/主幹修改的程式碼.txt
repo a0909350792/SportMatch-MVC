@@ -1,0 +1,13 @@
+_ViewStart.cshtml -
+    @{
+	string? Action = ViewContext.RouteData.Values["action"]!.ToString();
+
+	if (Action == "Door")
+    	{
+            Layout = "_UnLayout";
+	}
+	else
+	{
+	    Layout = "_Layout";
+	}
+    }

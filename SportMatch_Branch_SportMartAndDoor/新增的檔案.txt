@@ -1,0 +1,39 @@
+
+新增檔案 -
+
+圖片 -
+    icon1
+    iconLong
+    iconSide
+    
+    ModelFooterProductImage01
+    ModelFooterProductImage02
+    ModelFooterProductImage03
+
+	DoorImage - 
+    	BadmintonLogo01 - 03
+	    BasketballLogo01 - 03
+	    VolleyballLogo01 - 03
+	    TopMask
+	    BottomMask
+	    DoorBackground
+
+檔案 -
+    MartController.cs
+    DoorController.cs
+    _UnLayout.cshtml
+    
+資料夾 -
+    Door - 
+	Door.cshtml
+	    Door.cshtml.css
+	    Door.cshtml.js
+    Mart -
+    	Mart.cshtml
+    	    Mart.cshtml.css
+    	    Mart.cshtml.js
+	Checkout.cshtml
+	    Checkout.cshtml.css
+	    Checkout.cshtml.js
+	Bill.cshtml
+	    Bill.cshtml.css
