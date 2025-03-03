@@ -1,5 +1,5 @@
 @* @model TModel *@
-@* 編輯資訊 *@
+
 <div class="modal fade" id="userDataModal" tabindex="-1" aria-labelledby="userDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -29,7 +29,7 @@
                         <input type="password" class="form-control" id="user-password">
                     </div>
                     <label for="user-phone" class="col-form-label">手機</label>
-                    <div class="input-group mb-3 p-0">
+                    <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="請輸入欲變更的手機號碼" aria-label="" aria-describedby="button-addon2" id="user-phone">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">傳送驗證碼</button>
                     </div>
@@ -42,104 +42,18 @@
         </div>
     </div>
 </div>
-@* 新增付款 *@
-<div class="modal fade" id="userPaymentModal" aria-hidden="true" aria-labelledby="userPaymentModalLabel" tabindex="-1">
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-6" id="userPaymentModalLabel">付款資訊-新增</h1>
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="user-cardNumber" class="col-form-label">卡號</label>
-                        <input type="number" class="form-control" id="user-cardNumber">
-                    </div>
-                    <div class="mb-3">
-                        <label for="user-cardType" class="col-form-label">卡片類型</label>
-                        <select class="form-select" aria-label="請選擇卡片類型" id="user-cardType">
-                            <option value="1">Visa</option>
-                            <option value="2">MasterCard</option>
-                            <option value="3">JCB</option>
-                        </select>
-                    </div>
-                    <label for="validityPeriod" class="col-form-label">有效日期</label>
-                    <div class="input-group mb-3 p-0" >
-                        <input type="text" class="form-control" id="validityPeriod" placeholder="MM" aria-label="validityPeriod">
-                        <span class="input-group-text bg-opacity-10 border-0">/</span>
-                        <input type="text" class="form-control" placeholder="YY" aria-label="validityPeriod">
-                    </div>
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="setDefaultPayment">設為預設卡片</label>
-                        <input class="form-check-input" type="checkbox" id="setDefaultPayment" checked>
-                    </div>
-                </form>
+                彈窗2
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">新增</button>
-            </div>
-        </div>
-    </div>
-</div>
-@* 刪除確認 *@
-<div class="modal fade" id="noticeDeleteModal" aria-hidden="true" aria-labelledby="noticeDeleteModalLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-6" id="noticeDeleteModalLabel"><i class="fa-solid fa-circle-exclamation me-2"></i>確認要刪除？</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>將刪除<strong>卡號：**** **** **** *284</strong></p>
-            </div>
-            <div class="modal-footer border-top-0">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger">確認刪除</button>
-            </div>
-        </div>
-    </div>
-</div>
-@* 新增收貨地址 *@
-<div class="modal fade" id="userReceiveAddressModal" aria-hidden="true" aria-labelledby="userPaymentModalLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-6" id="userReceiveAddressModalLabel">宅配資訊-新增</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="user-receiveAddress" class="col-form-label">收貨地址</label>
-                        <div class="input-group p-0">
-                            <select class="form-select border-0" id="inputGroupSelect02">
-                                <option selected>請選擇縣市</option>
-                                <option value="1">基隆市</option>
-                                <option value="2">臺北市</option>
-                                <option value="3">新北市</option>
-                            </select>
-                            <input type="text" class="form-control" id="user-receiveAddress">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="receivedName" class="col-form-label">收件人</label>
-                        <input type="text" class="form-control" id="receivedName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="receivedPhone" class="col-form-label">手機</label>
-                        <input type="number" class="form-control" id="receivedPhone">
-                    </div>
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="setDefaultReceived">設為預設收貨資訊</label>
-                        <input class="form-check-input" type="checkbox" id="setDefaultReceived" checked>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">新增</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
             </div>
         </div>
     </div>

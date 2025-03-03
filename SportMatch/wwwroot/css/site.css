@@ -982,4 +982,509 @@ button:focus {
     display: none; /* ��l���� */
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
+/*文字限縮顯示*/
+.txt-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
+/* 側邊列表 */
+.SideNav {
+    width: 15%;
+    min-width: 247px;
+    height: fit-content;
+    border-radius: 0 16px 16px 0;
+    padding: 16px;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.SideNav ul li {
+    width: 100%;
+    list-style: none;
+    text-decoration: none;
+    
+    &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+    }
+}
+.SideNav ul li a {
+    display: flex;
+    width: inherit;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    transition: all 0.3s ;
+    position: relative;
+
+    &:active,
+    &.active,
+    &:hover {
+        background-color: lightgray;
+    }
+    
+    &:hover {
+        .fa-chevron-right {
+            right: 0.85rem;
+        }
+    }
+    
+    i:first-of-type {
+        margin-right: 1rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid blue; /* 只在鍵盤導航時顯示 */
+    }
+
+    .fa-chevron-right{
+        font-size: 0.85rem;
+        color: darkgray;
+        position: absolute;
+        top: 50%;
+        left: unset;
+        right: 1rem;
+        transform: translateY(-50%);
+        transition: all 0.3s;
+    }
+}
+
+/*會員中心共用-table*/
+table.memCt {
+    border: 1px solid lightgray;
+    font-size: 14px;
+    margin-bottom: 0;
+
+    tr {
+        border-bottom: 1px solid lightgray;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+
+    td {
+        .status {
+            border: 1px solid green;
+            padding: 2px 4px;
+            text-wrap: nowrap;
+
+            &.default {
+                border-color: lightgreen;
+                color: green;
+            }
+        }
+        button {
+            font-size: 12px;
+        }
+    }
+
+    th,
+    td {
+        vertical-align: middle;
+        position: relative;
+
+        &:after{
+            content: '';
+            width: 1px;
+            height: 30%;
+            background: lightgrey;
+            position: absolute;
+            left: unset;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &:last-of-type {
+            &:after{
+                display: none;
+            }
+        }
+    }
+}
+
+/*計數樣式*/
+.recordCount{
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 16px;
+}
+
+/*btn-點擊之外的匡線*/
+button.btn {
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    &:not(:focus ) {
+        border: none;
+        box-shadow: none;
+    }
+}
+
+/*加入我的最愛按鈕*/
+button.favBtn {
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    &:not(:focus ) {
+        border: none;
+        box-shadow: none;
+    }
+    i {
+        font-size: 20px;
+        color: #ff5e62;
+        
+        &.fa-regular{
+            color: black;
+        }
+    }
+}
+
+/*下拉選單樣式*/
+.accordion {
+    .accordion-header {
+       .accordion-button {
+           .blockTitle {
+               font-size: 15px !important;
+           }
+           
+           i {
+               transition: all 0.3s;
+           }
+           
+           &::after {
+               display: none;
+           }
+
+           &:focus {
+               outline: none;
+               box-shadow: none;
+           }
+
+           &:not(.collapsed) {
+               background-color: unset;
+               
+               i {
+                   rotate: 180deg;
+               }
+           }
+       }
+    }
+    .accordion-collapse {
+        .accordion-body {
+            table {
+                border: 1px solid lightgray;
+                font-size: 14px;
+                margin-bottom: 0;
+                
+                tr {
+                    border-bottom: 1px solid lightgray;
+                }
+
+                th {
+                    background-color: lightgray;
+                }
+                
+                td {
+                    .status {
+                        border: 1px solid green;
+                        padding: 2px 4px;
+                        text-wrap: nowrap;
+                        
+                        &.default {
+                            border-color: lightgreen;
+                            color: green;
+                        }
+                    }
+                    button {
+                        font-size: 12px;
+                    }
+                }
+                
+                th,
+                td {
+                    vertical-align: middle;
+                    position: relative;
+                    
+                    &:after{
+                        content: '';
+                        width: 1px;
+                        height: 30%;
+                        background: lightgrey;
+                        position: absolute;
+                        left: unset;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                    
+                    &:last-of-type {
+                        &:after{
+                            display: none;
+                        }
+                    }
+                }
+            }
+            
+            /*我的最愛-場地*/
+            &.venue-part,
+            &.shop-part {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                
+                .card {
+                   width: calc((100% - 2rem) / 2);
+                    
+                    &.product {
+                        width: calc((100% - 2rem) / 3);
+                    }
+                    
+                    .row {
+                        
+                        
+                        div {
+                            position: relative;
+                            
+                            img {
+                                height: 100%;
+                                object-fit: cover;
+                            }
+
+                            button.favBtn {
+                                position: absolute;
+                                left: 1px;
+                                top: 1px;
+                                z-index: 2;
+                            }
+                        }
+                        
+                        .card-body {
+                            p {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+/*分頁tab*/
+ul.nav-underline {
+    padding: 0 1rem;
+    margin: 0 0 1rem;
+    position: relative;
+    
+    li {
+        a {
+            color: darkgray;
+            font-size: 0.875rem;
+
+            &:focus {
+                outline: none;
+            }
+
+            &:focus-visible {
+                outline: 2px solid blue; /* 只在鍵盤導航時顯示 */
+            }
+        }
+    }
+
+    button.action {
+        position: absolute;
+        left: unset;
+        right: 0;
+        top: 50%;
+        transform: translateY(-30%);
+    }
+}
+
+/*通知中心-訊息清單*/
+ul.notification-list {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    
+    
+    li {
+        width: 100%;
+        border-radius: 8px;
+        background-color: lightgray;
+        padding: 1rem;
+        gap: 1rem;
+        position: relative;
+        
+        .notifyIcon {
+            width: 4rem;
+            height: 4rem;
+            background-color: #d8e5fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            overflow: hidden;
+            
+            i {
+                font-size: 1.25rem;
+                color: white;
+            }
+        }
+        
+        &.unread {
+            background-color: aliceblue;
+        }
+        
+        .content {
+            width: 71%;
+            max-width: 71%;
+            line-height: 1.25rem;
+            flex-shrink: 0;
+            
+            strong {
+                font-weight: bold;
+            }
+            
+            .time {
+                color: darkgray;
+            }
+        }
+        
+        .actions {
+            position: absolute;
+            left: unset;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+/*tab內容容器*/
+.tab-wrapper {
+    .tab-content {
+        padding: 0 0 0 1rem;
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+        transition: opacity 0.3s ease-in-out;
+
+        table {
+            border: 1px solid lightgray;
+            font-size: 14px;
+            margin-bottom: 0;
+
+            tr {
+                border-bottom: 1px solid lightgray;
+                
+                &:last-of-type {
+                    border-bottom: none;
+                }
+            }
+
+            th {
+                background-color: lightgray;
+            }
+
+            td {
+                .status {
+                    text-wrap: nowrap;
+                    border: 1px solid green;
+                    padding: 2px 4px;
+
+                    &.default {
+                        border-color: lightgreen;
+                        color: green;
+                    }
+                    
+                    &.cancel {
+                        border-color: darkgray;
+                        color: darkgray;
+                    }
+
+                    &.leader {
+                        border-color: dodgerblue;
+                        color: dodgerblue;
+                    }
+                }
+                button {
+                    font-size: 12px;
+                }
+                
+                table {
+                    border-radius: 8px;
+                    overflow: hidden;
+                    
+                    th,
+                    td {
+                        vertical-align: center;
+                        padding: 0 0.85rem;
+                        
+                        &:nth-of-type(1) {
+                            text-align: left;
+                        }
+                    }
+                    
+                    td {
+                        padding: 0.85rem;
+                    }
+                }
+            }
+
+            th,
+            td {
+                vertical-align: middle;
+                position: relative;
+
+                &:after{
+                    content: '';
+                    width: 1px;
+                    height: 30%;
+                    background: lightgrey;
+                    position: absolute;
+                    left: unset;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                &:last-of-type {
+                    &:after{
+                        display: none;
+                    }
+                }
+            }
+        }
+        
+        /*喜愛的運動*/
+        &.favSport {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+        /*即將到來的活動*/
+        &.onComingEvent {
+            
+        }
+    }
+    .tab-content.active {
+        visibility: visible;
+        opacity: 1;
+        height: auto;
+    }
+}

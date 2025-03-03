@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="~/SportMatch.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/memberLayout.css" asp-append-version="true"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="~/Index/reset.css" rel="stylesheet" type="text/css" />
     <link href="~/Index/login.css" rel="stylesheet" type="text/css" />
@@ -18,236 +17,193 @@
     <title>SportMatch</title>
 </head>
 <body>
-<header>
-    <div class="header-container">
-        <div class="logo">
-            SportMatch
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="/Home/Index">首頁</a></li>
-                <li><a href="#matching" onclick="checkLoginStatus(event)">配對系統</a></li>
-                <li><a href="#events" onclick="checkLoginStatus(event)">賽事資訊</a></li>
-                <li><a href="/Venue/Index">場地資訊</a></li>
-                <li><a href="#shop" onclick="checkLoginStatus(event)">運動商城</a></li>
-            </ul>
-            <div class="header-actions">
-                <div class="user-actions">
-                    <div class="cart-container" style="display: none">
-                        <button class="btn-cart" data-count="0" onclick="toggleCart()">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                        <div class="cart-dropdown">
-                            <div class="no-cart-items">目前購物車是空的</div>
-                        </div>
-                    </div>
-                    <div class="notifications-container" style="display: none">
-                        <button class="btn-notifications"
-                                data-count="0"
-                                onclick="toggleNotifications()">
-                            <i class="fas fa-bell"></i>
-                        </button>
-                        <div class="notifications-dropdown">
-                            <div class="no-notifications">目前沒有任何通知</div>
-                        </div>
-                    </div>
-                    @* <button onclick="openLoginModal()" class="btn-login">登入</button> *@
-                    @* <a asp-controller="Register" asp-action="register" target="_blank" class="btn-register">註冊</a> *@
-
-                    <div class="user-email-container" style="display: none">
-                        <span class="user-email"></span>
-                        <div class="dropdown-content">
-                            <a href="#profile">個人資料</a>
-                            <a href="#matches">配對資訊</a>
-                            <a href="#cart">購物車清單</a>
-                            <a href="#favorites">收藏清單</a>
-                            <button class="btn-logout" onclick="handleLogout()">
-                                登出
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                SportMatch
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/Home/Index">首頁</a></li>
+                    <li><a href="#matching" onclick="checkLoginStatus(event)">配對系統</a></li>
+                    <li><a href="#events" onclick="checkLoginStatus(event)">賽事資訊</a></li>
+                    <li><a href="/Venue/Index">場地資訊</a></li>
+                    <li><a href="#shop" onclick="checkLoginStatus(event)">運動商城</a></li>
+                </ul>
+                <div class="header-actions">
+                    <div class="user-actions">
+                        <div class="cart-container" style="display: none">
+                            <button class="btn-cart" data-count="0" onclick="toggleCart()">
+                                <i class="fas fa-shopping-cart"></i>
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-</header>
-<!-- 登入彈窗 -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <div class="login-header">
-            <h2>會員登入</h2>
-            <button class="close-modal" onclick="closeModal()">&times;</button>
-            <div class="sports-icons sports-icons-marquee">
-                <i class="fas fa-basketball-ball"></i>
-                <i class="fas fa-futbol"></i>
-                <i class="fas fa-volleyball-ball"></i>
-            </div>
-        </div>
-        <form id="loginForm" action="/Account/Login" method="post" class="login-form" onsubmit="handleLogin(event)">
-            <div class="input-group">
-                <i class="fas fa-person"></i>
-                <input type="email" id="email" placeholder="運動員帳號" required />
-                <button type="button" class="toggle-password">
-                    <span class="icon">
-                        <ion-icon name="mail-outline"></ion-icon>
-                    </span>
-                </button>
-            </div>
-
-            <div class="input-group password-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" id="password" placeholder="密碼" required />
-                <button type="button" class="toggle-password">
-                    <span class="icon">
-                        <ion-icon name="eye-off-outline" id="Pwhide"></ion-icon>
-                    </span>
-                </button>
-            </div>
-            <div class="remember-me">
-                <label class="checkbox-container">
-                    <input type="checkbox" id="remember" />
-                    <span class="checkmark"></span>
-                    記住我的帳號
-                </label>
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-running"></i> 開始運動
-            </button>
-            <div class="form-footer">
-                <a asp-controller="Forgotpassword" asp-action="forgotpassword" target="_blank" class="btn-forgotpassword">忘記密碼</a>
-                <p class="no-account">沒有帳號?</p>
-
-                <a asp-controller="Register" asp-action="Register" target="_blank" class="btn-register2">現在註冊</a>
-
-            </div>
-        </form>
-        @if (ViewBag.ErrorMessage != null)
-        {
-            <div class="error-message">@ViewBag.ErrorMessage</div>
-        }
-        <div class="social-login">
-            <p>其他登入方式</p>
-            <div class="social-buttons">
-                <button class="social-btn facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="social-btn google">
-                    <i class="fab fa-google"></i>
-                </button>
-                <button class="social-btn line"><i class="fab fa-line"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="module"
-        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule
-        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
-<script src="/js/login.js"></script>
-<div class="main-container container-fulid">
-    <main role="main">
-        <div class="main-wrap">
-            @if (ViewData["MenuItems"] != null)
-            {
-                @await Html.PartialAsync("_SideNavPartial", ViewData["MenuItems"] as List<MenuItem>)
-            }
-                
-            @if (Context.Request.Path.StartsWithSegments("/Venue"))
-            {   
-                <div class="main-content venusPage">
-                    @await Html.PartialAsync("_ToastPartial")
-                    <div class="data-container">
-                        @RenderBody()
-                    </div>
-                </div>
-            } else if (Context.Request.Path.StartsWithSegments("/AboutUs"))
-            {
-                <div class="main-content aboutUsPagePage">
-                    @await Html.PartialAsync("_ToastPartial")
-                    <div class="data-container">@RenderBody()</div>
-                </div>
-            }
-            else
-            {   
-                <div class="main-content d-flex flex-column">
-                    <div class="alert alert-warning align-items-top position-absolute" style="top: 10%;
-    left: 43%; width: fit-content; background-color: #ffffe0;border-color: #ffc107; z-index: 2;" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body d-flex align-items-center">
-                                <i class="fa-solid fa-exclamation me-2"></i>
-                                <p class="" style="text-wrap: nowrap;">您的個人資料未完善，請至<a href="/MemberCenter/Account" class="text-primary">帳號資訊頁</a>開通手機驗證</p>
+                            <div class="cart-dropdown">
+                                <div class="no-cart-items">目前購物車是空的</div>
                             </div>
-                            <!--<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>-->
+                        </div>
+                        <div class="notifications-container" style="display: none">
+                            <button class="btn-notifications"
+                                    data-count="0"
+                                    onclick="toggleNotifications()">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            <div class="notifications-dropdown">
+                                <div class="no-notifications">目前沒有任何通知</div>
+                            </div>
+                        </div>
+                        @* <button onclick="openLoginModal()" class="btn-login">登入</button> *@
+                        @* <a asp-controller="Register" asp-action="register" target="_blank" class="btn-register">註冊</a> *@
+
+                        <div class="user-email-container" style="display: none">
+                            <span class="user-email"></span>
+                            <div class="dropdown-content">
+                                <a href="#profile">個人資料</a>
+                                <a href="#matches">配對資訊</a>
+                                <a href="#cart">購物車清單</a>
+                                <a href="#favorites">收藏清單</a>
+                                <button class="btn-logout" onclick="handleLogout()">
+                                    登出
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    @await Html.PartialAsync("_ToastPartial")
-                    <div class="data-container">@RenderBody()</div>
                 </div>
-            }
+            </nav>
         </div>
-    </main>
-</div>
-@await Html.PartialAsync("_FooterPartial")
-@await Html.PartialAsync("_PopupPartial")
+    </header>
+    <!-- 登入彈窗 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="login-header">
+                <h2>會員登入</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+                <div class="sports-icons sports-icons-marquee">
+                    <i class="fas fa-basketball-ball"></i>
+                    <i class="fas fa-futbol"></i>
+                    <i class="fas fa-volleyball-ball"></i>
+                </div>
+            </div>
+            <form id="loginForm" action="/Account/Login" method="post" class="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-person"></i>
+                    <input type="email" id="email" placeholder="運動員帳號" required />
+                    <button type="button" class="toggle-password">
+                        <span class="icon">
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </span>
+                    </button>
+                </div>
+
+                <div class="input-group password-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="密碼" required />
+                    <button type="button" class="toggle-password">
+                        <span class="icon">
+                            <ion-icon name="eye-off-outline" id="Pwhide"></ion-icon>
+                        </span>
+                    </button>
+                </div>
+                <div class="remember-me">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember" />
+                        <span class="checkmark"></span>
+                        記住我的帳號
+                    </label>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-running"></i> 開始運動
+                </button>
+                <div class="form-footer">
+                    <a asp-controller="Forgotpassword" asp-action="forgotpassword" target="_blank" class="btn-forgotpassword">忘記密碼</a>
+                    <p class="no-account">沒有帳號?</p>
+
+                    <a asp-controller="Register" asp-action="Register" target="_blank" class="btn-register2">現在註冊</a>
+
+                </div>
+            </form>
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="error-message">@ViewBag.ErrorMessage</div>
+            }
+            <div class="social-login">
+                <p>其他登入方式</p>
+                <div class="social-buttons">
+                    <button class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-btn line"><i class="fab fa-line"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    <script src="/js/login.js"></script>
+    <div class="main-container container-xl">
+        <main role="main" >
+            <div class="main-wrap">
+                @if (ViewData["MenuItems"] != null)
+                {
+                    @await Html.PartialAsync("_SideNavPartial", ViewData["MenuItems"] as List<MenuItem>)
+                }
+                
+                    @if (Context.Request.Path.StartsWithSegments("/Venue"))
+                    {
+                        <div class="main-content venusPage d-flex">
+                            <div class="data-container">@RenderBody()</div>
+                        </div>
+                    } else if (Context.Request.Path.StartsWithSegments("/AboutUs"))
+                    {
+                        <div class="main-content aboutUsPagePage">
+                            <div class="data-container">@RenderBody()</div>
+                        </div>
+                    }
+                    else
+                    {   
+                        <div class="main-content d-flex flex-column">
+                            <div class="data-container">@RenderBody()</div>
+                        </div>
+                    }
+            </div>
+        </main>
+    </div>
+    @await Html.PartialAsync("_FooterPartial")
+    @await Html.PartialAsync("_PopupPartial")
+</body>
+</html>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@* <script src="~/js/_Layout.js" type="text/javascript"></script> *@
 <script>
-    
-    // 收起
-    $('.collapse-wrapper .wrapTrigger').on('click',function (){
-        $(this).closest('.collapse-wrapper').toggleClass('collapsed');
-    });
-   
+    //彈窗測試
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an Ajax request here
+            // and then do the updating in a callback.
+
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalTitle.textContent = `New message to ${recipient}`
+            modalBodyInput.value = recipient
+        })
+    }
     // 愛心按鈕切換
     $('button.favBtn').on('click', function(){
         $(this).children('i').toggleClass('fa-solid fa-regular');
     });
-    
-    document.querySelectorAll("button.favBtn").forEach(button => {
-        button.addEventListener('click',function () {
-            const type = this.dataset.type;
-            const id = this.dataset.id;
-            const card = this.closest('.card');
-            const tr = this.closest('tr');
-
-            if (card) {
-                card.classList.add("removing");
-
-                setTimeout(() => {
-                    card.remove();
-                }, 400);
-            }
-            if (tr) {
-                tr.classList.add("removing");
-
-                setTimeout(() => {
-                    tr.remove();
-                }, 400);
-            }
-            removeFav(type , id);
-            showToast(`已移除 ${type} (ID: ${id})`, 'success');
-        });
-    });
-    
-    function removeFav(type, id){
-        //fetch(`/api/favorites/remove`, {
-        //    method: "POST",
-        //    headers:{'Content-Type': 'application/json'},
-        //    body: JSON.stringify({type, id})
-       // })
-       //     .then(response => response.json())
-       //     .then(data => {
-       //         if (data.success) {
-       //             showToast(`已移除 ${type} (ID: ${id})`, 'success');
-       //         }
-       //     })
-       //     .catch(error => console.error('Error:', error));
-    }
 
 
 </script>
 @await RenderSectionAsync("scripts", required: false)
-</body>
-</html>
-
