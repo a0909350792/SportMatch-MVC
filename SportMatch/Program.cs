@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add services to the container.
-builder.Services.AddDbContext<SportMatchContext>(
+builder.Services.AddDbContext<MyDbContext>(
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
